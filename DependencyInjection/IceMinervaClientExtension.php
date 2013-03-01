@@ -21,7 +21,9 @@ class IceMinervaClientExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('minerva_client.service_description.path', __DIR__ . '/../Resources/config/client.json');
+
+        $container->setParameter('ice_minerva_client.service_description_path', __DIR__ . '/../Resources/config/client.json');
+        $container->setParameter('ice_minerva_client.base_url', $config['base_url']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

@@ -1,0 +1,104 @@
+{
+    "name": "ICE Minerva",
+    "operations": {
+        "SetApplicationStatus": {
+            "httpMethod": "PUT",
+            "uri": "api/academicinformation/{username}/{courseId}/statuses/application",
+            "summary": "Sets the application status",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "applicationStatusCode": {
+                    "location": "json",
+                    "required": true
+                }
+            }
+        },
+
+        "SetBursaryStatus": {
+            "httpMethod": "PUT",
+            "uri": "api/academicinformation/{username}/{courseId}/statuses/bursary",
+            "summary": "Sets the bursary status",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "bursaryStatusCode": {
+                    "location": "json",
+                    "required": true
+                }
+            }
+        },
+
+        "SetEnglishLanguageStatus": {
+            "httpMethod": "PUT",
+            "uri": "api/academicinformation/{username}/{courseId}/statuses/englishlanguage",
+            "summary": "Sets the english language status",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "englishLanguageStatusCode": {
+                    "location": "json",
+                    "required": true
+                }
+            }
+        },
+
+        "CreateAcademicInformation": {
+            "httpMethod": "PUT",
+            "uri": "api/academicinformation/{username}/{courseId}",
+            "summary": "Creates an Academic Information record",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "enrolmentStatusCode": {
+                    "location": "json",
+                    "required": false
+                },
+                "paymentStatusCode": {
+                    "location": "json",
+                    "required": false
+                },
+                "applicationStatusCode": {
+                    "location": "json",
+                    "required": false
+                },
+                "registrationStatusCode": {
+                    "location": "json",
+                    "required": false
+                },
+                "englishLanguageStatusCode": {
+                    "location": "json",
+                    "required": false
+                },
+                "bursaryStatusCode": {
+                    "location": "json",
+                    "required": false
+                }
+            }
+        }
+    }
+}

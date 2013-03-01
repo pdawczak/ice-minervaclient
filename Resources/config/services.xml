@@ -4,8 +4,38 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="ice.minerva_client.listener.mercury_group_balance_change_listener" class="Ice\MinervaClientBundle\EventListener\MercuryListener">
+        <service
+                id="ice.minerva_client.listener.mercury_group_balance_change_listener"
+                class="Ice\MinervaClientBundle\EventListener\MercuryListener">
             <tag name="kernel.event_listener" event="ice.mercury.group_balance_change" method="onGroupBalanceChange" />
+            <argument type="service" id="minerva.client" />
+        </service>
+
+        <service
+                id="minerva_client.guzzle"
+                class="%guzzle.client.class%"
+                public="false">
+            <tag name="guzzle.client"/>
+            <argument>%ice_minerva_client.base_url%</argument>
+            <call method="setDescription">
+                <argument type="service" id="minerva_client.service_description"/>
+            </call>
+        </service>
+
+        <service
+                id="minerva_client.service_description"
+                class="%guzzle.service_description.class%"
+                factory-class="%guzzle.service_description.class%"
+                factory-method="factory"
+                public="false"
+                >
+            <argument>%ice_minerva_client.service_description_path%</argument>
+        </service>
+
+        <service
+                id="minerva.client"
+                class="Ice\MinervaClientBundle\Service\MinervaClient">
+            <argument type="service" id="minerva_client.guzzle" />
         </service>
     </services>
 </container>
