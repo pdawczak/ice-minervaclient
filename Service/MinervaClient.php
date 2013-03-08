@@ -206,4 +206,66 @@ class MinervaClient
             'englishLanguageStatusCode' => $status,
         ))->execute();
     }
+
+    public function getRegistrationStep($username, $courseId, $stepName)
+    {
+        return $this->client
+            ->getCommand('GetRegistrationStep', array(
+            'username' => $username,
+            'courseId' => $courseId,
+            'stepName' => $stepName,
+        ))
+            ->execute();
+    }
+
+    public function setRegistrationStep($username, $courseId, array $values)
+    {
+        $values = array_merge($values, array(
+            'username' => $username,
+            'courseId' => $courseId,
+        ));
+
+        return $this->client
+            ->getCommand('SetRegistrationStep', $values)
+            ->execute();
+    }
+
+    public function setRegistration($username, $courseId, array $values = array())
+    {
+        $values = array_merge($values, array(
+            'username' => $username,
+            'courseId' => $courseId,
+        ));
+
+        return $this->client
+            ->getCommand('SetRegistration', $values)
+            ->execute();
+    }
+
+    public function setRegistrationFieldValue($username, $courseId, $stepName, $fieldName, array $values)
+    {
+        $values = array_merge($values, array(
+            'fieldNameUri' => $fieldName,
+            'username' => $username,
+            'courseId' => $courseId,
+            'stepName' => $stepName,
+            'fieldName' => $fieldName,
+        ));
+
+        return $this->client
+            ->getCommand('SetRegistrationFieldValue', $values)
+            ->execute();
+    }
+
+    public function addBookingItem($username, $courseId, array $values)
+    {
+        $values = array_merge($values, array(
+            'username' => $username,
+            'courseId' => $courseId,
+        ));
+
+        return $this->client
+            ->getCommand('addBookingItem', $values)
+            ->execute();
+    }
 }

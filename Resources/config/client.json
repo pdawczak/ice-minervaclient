@@ -99,6 +99,201 @@
                     "required": false
                 }
             }
+        },
+        "GetRegistrationStep": {
+            "httpMethod": "GET",
+            "uri": "api/registrations/{username}/{courseId}/steps/{stepName}",
+            "summary": "Gets a registration step",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "stepName": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "SetRegistrationStep": {
+            "httpMethod": "PUT",
+            "uri": "api/registrations/{username}/{courseId}/steps/{stepName}",
+            "summary": "Sets the registration step values",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "stepName": {
+                    "location": "uri",
+                    "required": true
+                },
+                "order": {
+                    "location": "json",
+                    "required": true
+                },
+                "description": {
+                    "location": "json",
+                    "required": true
+                },
+                "began": {
+                    "location": "json",
+                    "required": false
+                },
+                "updated": {
+                    "location": "json",
+                    "required": false
+                },
+                "completed": {
+                    "location": "json",
+                    "required": false
+                },
+                "registrationFieldValues": {
+                    "location": "json",
+                    "type": "array",
+                    "additionalProperties": {
+                        "fieldName": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "order": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        },
+                        "description": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "value": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            }
+        },
+        "SetRegistration": {
+            "httpMethod": "PUT",
+            "uri": "api/registrations/{username}/{courseId}",
+            "summary": "Sets the root registration",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "began": {
+                    "location": "json",
+                    "required": false
+                },
+                "updated": {
+                    "location": "json",
+                    "required": false
+                },
+                "completed": {
+                    "location": "json",
+                    "required": false
+                }
+            }
+        },
+        "SetRegistrationFieldValue": {
+            "httpMethod": "PUT",
+            "uri": "api/registrations/{username}/{courseId}/steps/{stepName}/fields/{fieldNameUri}",
+            "summary": "Set a registration field value",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "stepName": {
+                    "location": "uri",
+                    "required": true
+                },
+                "fieldNameUri": {
+                    "location": "uri",
+                    "required": true,
+                    "sentAs": "fieldName"
+                },
+                "fieldName": {
+                    "location": "json",
+                    "required": true
+                },
+                "order": {
+                    "location": "json",
+                    "type": "integer",
+                    "required": true
+                },
+                "description": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "value": {
+                    "location": "json",
+                    "type": "string",
+                    "required": false
+                }
+            }
+        },
+        "addBookingItem": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/items",
+            "summary": "Add a booking item",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "bookingItems": {
+                    "location": "json",
+                    "type": "array",
+                    "additionalProperties": {
+                        "code": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "description": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "price": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        },
+                        "category": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        }
+                    }
+                }
+            }
         }
     }
 }
