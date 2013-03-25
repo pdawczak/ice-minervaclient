@@ -4,7 +4,10 @@ namespace Ice\MinervaClientBundle\Service;
 
 use Guzzle\Service\Client;
 
+use Ice\MinervaClientBundle\Entity\AcademicInformation;
 use Ice\MinervaClientBundle\Entity\MinervaStatus;
+use Ice\MinervaClientBundle\Exception\ClientErrorResponseException;
+use Ice\MinervaClientBundle\Exception\NotFoundException;
 
 class MinervaClient
 {
@@ -267,5 +270,30 @@ class MinervaClient
         return $this->client
             ->getCommand('addBookingItem', $values)
             ->execute();
+    }
+
+    /**
+     * @param $iceId
+     * @param $courseId
+     * @return AcademicInformation
+     * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
+     */
+    public function getAcademicInformation($iceId, $courseId){
+        try{
+            $academicInformation = $this->client->getCommand('GetAcademicInformation', array(
+                'username'=>$iceId,
+                'courseId'=>$courseId
+            ))->execute();
+            return $academicInformation;
+        }
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $e){
+            if($e->getResponse()->getStatusCode()===404){
+                throw new NotFoundException("Academic information not found for this person and course", 404, $e);
+            }
+            else{
+                throw $e;
+            }
+        }
     }
 }

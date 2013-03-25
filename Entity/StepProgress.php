@@ -3,12 +3,20 @@ namespace Ice\MinervaClientBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 
-class RegistrationProgress{
+class StepProgress
+{
     /**
-     * @var Booking
+     * @var RegistrationProgress
      * @JMS\Exclude
      */
-    private $booking;
+    private $registrationProgress;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     * @JMS\SerializedName("stepName")
+     */
+    private $stepName;
 
     /**
      * @var \DateTime
@@ -29,24 +37,51 @@ class RegistrationProgress{
     private $completed;
 
     /**
-     * @var StepProgress[]
-     * @JMS\Type("array<Ice\MinervaClientBundle\Entity\StepProgress>")
-     * @JMS\SerializedName("stepProgresses")
-     * @JMS\AccessType("public_method")
+     * @var FieldValue[]
+     * @JMS\Type("array<Ice\MinervaClientBundle\Entity\FieldValue>")
+     * @JMS\SerializedName("fieldValues")
      */
-    private $stepProgresses;
+    private $fieldValues;
 
     /**
-     * @return Booking
+     * @param $registrationProgress
+     * @return $this
      */
-    public function getBooking()
+    public function setRegistrationProgress($registrationProgress)
     {
-        return $this->booking;
+        $this->registrationProgress = $registrationProgress;
+        return $this;
+    }
+
+    /**
+     * @return RegistrationProgress
+     */
+    public function getRegistrationProgress()
+    {
+        return $this->registrationProgress;
+    }
+
+    /**
+     * @param string $stepName
+     * @return StepProgress
+     */
+    public function setStepName($stepName)
+    {
+        $this->stepName = $stepName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStepName()
+    {
+        return $this->stepName;
     }
 
     /**
      * @param \DateTime $began
-     * @return RegistrationProgress
+     * @return StepProgress
      */
     public function setBegan($began)
     {
@@ -64,7 +99,7 @@ class RegistrationProgress{
 
     /**
      * @param \DateTime $completed
-     * @return RegistrationProgress
+     * @return StepProgress
      */
     public function setCompleted($completed)
     {
@@ -82,7 +117,7 @@ class RegistrationProgress{
 
     /**
      * @param \DateTime $updated
-     * @return RegistrationProgress
+     * @return StepProgress
      */
     public function setUpdated($updated)
     {
@@ -96,26 +131,5 @@ class RegistrationProgress{
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * @param StepProgress[] $stepProgresses
-     * @return $this
-     */
-    public function setStepProgresses($stepProgresses)
-    {
-        $this->stepProgresses = $stepProgresses;
-        foreach($this->stepProgresses as $stepProgress){
-            $stepProgress->setRegistrationProgress($this);
-        }
-        return $this;
-    }
-
-    /**
-     * @return StepProgress[]
-     */
-    public function getStepProgresses()
-    {
-        return $this->stepProgresses;
     }
 }

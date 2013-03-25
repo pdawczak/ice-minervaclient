@@ -100,6 +100,22 @@
                 }
             }
         },
+        "GetAcademicInformation": {
+            "httpMethod": "GET",
+            "uri": "api/academicinformation/{username}/{courseId}",
+            "summary": "Gets an Academic Information record",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\AcademicInformation",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "GetRegistrationStep": {
             "httpMethod": "GET",
             "uri": "api/registrations/{username}/{courseId}/steps/{stepName}",

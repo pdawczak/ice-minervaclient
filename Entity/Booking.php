@@ -12,8 +12,18 @@ class Booking{
 
     /**
      * @var RegistrationProgress[]
+     * @JMS\SerializedName("registrationProgress");
+     * @JMS\Type("Ice\MinervaClientBundle\Entity\RegistrationProgress")
      */
-    private $registrationProgresses;
+    private $registrationProgress;
+
+    /**
+     * @var BookingItem[]
+     * @JMS\Type("array<Ice\MinervaClientBundle\Entity\BookingItem>")
+     * @JMS\SerializedName("bookingItems")
+     * @JMS\AccessType("public_method")
+     */
+    private $bookingItems;
 
     /**
      * @return AcademicInformation
@@ -24,10 +34,51 @@ class Booking{
     }
 
     /**
-     * @return RegistrationProgress[]
+     * @return RegistrationProgress
      */
-    public function getRegistrationProgresses()
+    public function getRegistrationProgress()
     {
-        return $this->registrationProgresses;
+        return $this->registrationProgress;
+    }
+
+    /**
+     * @param \Ice\MinervaClientBundle\Entity\AcademicInformation $academicInformation
+     * @return Booking
+     */
+    public function setAcademicInformation($academicInformation)
+    {
+        $this->academicInformation = $academicInformation;
+        return $this;
+    }
+
+    /**
+     * @param RegistrationProgress $registrationProgress
+     * @return $this
+     */
+    public function setRegistrationProgress($registrationProgress)
+    {
+        $this->registrationProgress = $registrationProgress;
+        return $this;
+    }
+
+    /**
+     * @param $bookingItems
+     * @return $this
+     */
+    public function setBookingItems($bookingItems)
+    {
+        $this->bookingItems = $bookingItems;
+        foreach($this->bookingItems as $bookingItem){
+            $bookingItem->setBooking($this);
+        }
+        return $this;
+    }
+
+    /**
+     * @return BookingItem[]
+     */
+    public function getBookingItems()
+    {
+        return $this->bookingItems;
     }
 }
