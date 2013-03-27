@@ -12,6 +12,12 @@ class Category
     private $description;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $code;
+
+    /**
      * @param string $description
      * @return Category
      */
@@ -27,5 +33,23 @@ class Category
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param string $code
+     * @return Category
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

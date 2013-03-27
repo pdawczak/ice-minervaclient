@@ -8,6 +8,7 @@ class FieldValue
     /**
      * @var string
      * @JMS\Type("string")
+     * @JMS\SerializedName("fieldName")
      */
     private $fieldName;
 

@@ -2,12 +2,17 @@
 
 namespace Ice\MinervaClientBundle\Service;
 
+use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Service\Client;
 
 use Ice\MinervaClientBundle\Entity\AcademicInformation;
 use Ice\MinervaClientBundle\Entity\MinervaStatus;
 use Ice\MinervaClientBundle\Exception\ClientErrorResponseException;
 use Ice\MinervaClientBundle\Exception\NotFoundException;
+use Ice\MinervaClientBundle\Exception\ValidationException;
+use Ice\MinervaClientBundle\Entity\Booking;
+use JMS\Serializer\Serializer;
+
 
 class MinervaClient
 {
@@ -17,13 +22,20 @@ class MinervaClient
     private $client;
 
     /**
-     * @param \Guzzle\Service\Client $client
+     * @var \JMS\Serializer\Serializer
      */
-    public function __construct(Client $client)
+    private $serializer;
+
+    /**
+     * @param Client $client
+     * @param Serializer $serializer
+     */
+    public function __construct(Client $client, Serializer $serializer)
     {
         $this->client = $client;
+        $this->serializer = $serializer;
         $this->client->setDefaultHeaders(array(
-            'Accepts' => 'application/json',
+            'Accept' => 'application/json',
         ));
     }
 
@@ -268,7 +280,7 @@ class MinervaClient
         ));
 
         return $this->client
-            ->getCommand('addBookingItem', $values)
+            ->getCommand('AddBookingItem', $values)
             ->execute();
     }
 
@@ -294,6 +306,51 @@ class MinervaClient
             else{
                 throw $e;
             }
+        }
+    }
+
+
+    /**
+     * @param string $username
+     * @param int $courseId
+     * @param string $bookedBy
+     * @param string|null $paymentGroupId
+     * @throws \Ice\MinervaClientBundle\Exception\ValidationException
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     */
+    public function createBooking($username, $courseId, $bookedBy, $paymentGroupId=null){
+        $values = array(
+            'username'=>$username,
+            'courseId'=>$courseId,
+            'bookedBy'=>$bookedBy
+        );
+
+        if($paymentGroupId){
+            $values['suborderGroupId'] = $paymentGroupId;
+        }
+
+        try{
+            $this->client->getCommand('CreateBooking', $values)->execute();
+        }
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $badResponseException){
+            try{
+                $responseObject = json_decode($badResponseException->getResponse()->getBody(true));
+                $form = $this->serializer->deserialize(
+                    $badResponseException->getResponse()->getBody(true),
+                    'Ice\\MinervaClientBundle\\Response\\FormError',
+                    'json'
+                );
+            }
+            catch(\Exception $deserializingException){
+                //We can't improve the exception - just re-throw the original
+                throw $badResponseException;
+            }
+            throw new ValidationException($form, 'Validation error', 400, $badResponseException);
+        }
+        catch(BadResponseException $e){
+            $string = $e->getRequest()->__toString();
+            echo $e->getResponse()->__toString();
+            echo $string;
         }
     }
 }

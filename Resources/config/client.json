@@ -67,6 +67,7 @@
             "summary": "Creates an Academic Information record",
             "parameters": {
                 "username": {
+
                     "location": "uri",
                     "required": true
                 },
@@ -270,18 +271,33 @@
                 }
             }
         },
-        "addBookingItem": {
-            "httpMethod": "POST",
-            "uri": "api/bookings/{username}/{courseId}/items",
-            "summary": "Add a booking item",
+        "CreateBooking": {
+            "httpMethod": "PUT",
+            "uri": "api/bookings/{username}/{courseId}",
+            "summary": "Create an empty booking",
             "parameters": {
                 "username": {
-                    "location": "uri",
-                    "required": true
+                    "location":"uri",
+                    "required":true
                 },
                 "courseId": {
-                    "location": "uri",
-                    "required": true
+                    "location":"uri",
+                    "required":true
+                },
+                "orderReference": {
+                    "location":"json",
+                    "required":false,
+                    "type":"string"
+                },
+                "bookedBy": {
+                    "location":"json",
+                    "required":true,
+                    "type":"string"
+                },
+                "suborderGroup": {
+                    "location":"json",
+                    "required":false,
+                    "type":"string"
                 },
                 "bookingItems": {
                     "location": "json",
@@ -308,6 +324,25 @@
                             "required": true
                         }
                     }
+                }
+            }
+        },
+        "AddBookingItem": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/items",
+            "summary": "Add a booking item",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "bookedBy": {
+                    "location": "json",
+                    "required": true
                 }
             }
         }

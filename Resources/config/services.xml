@@ -36,6 +36,7 @@
                 id="minerva.client"
                 class="Ice\MinervaClientBundle\Service\MinervaClient">
             <argument type="service" id="minerva_client.guzzle" />
+            <argument type="service" id="serializer"/>
         </service>
     </services>
 </container>
