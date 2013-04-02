@@ -104,14 +104,39 @@ class RegistrationProgress{
      */
     public function setStepProgresses($stepProgresses)
     {
-        $this->stepProgresses = $stepProgresses;
-        foreach($this->stepProgresses as $stepProgress){
+        $orderedStepProgresses = array();
+
+        /**
+         * Use a small offset here to ensure that duplicate step order values do not overwrite each other, and that
+         * the given order is preserved in these cases.
+         */
+        $i = 0.0;
+        foreach($stepProgresses as $stepProgress){
+            $index = $stepProgress->getOrder() ? floatval($stepProgress->getOrder()) : 0.0;
+            $orderedStepProgresses[strval($index+$i)] = $stepProgress;
             $stepProgress->setRegistrationProgress($this);
+            $i+=0.01;
         }
+        ksort($orderedStepProgresses, SORT_NUMERIC);
+
+        $this->stepProgresses = array_values($orderedStepProgresses);
         return $this;
     }
 
     /**
+     * @param StepProgress $stepProgress
+     * @return $this
+     */
+    public function addStepProgress($stepProgress)
+    {
+        $stepProgress->setRegistrationProgress($this);
+        $this->stepProgresses[] = $stepProgress;
+        return $this;
+    }
+
+    /**
+     * Return an ordered StepProgress list
+     *
      * @return StepProgress[]
      */
     public function getStepProgresses()
