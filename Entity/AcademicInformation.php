@@ -112,4 +112,12 @@ class AcademicInformation{
     {
         return $this->iceId;
     }
+
+    /**
+     * @return Booking|null
+     */
+    public function getActiveBooking(){
+        if($this->bookings) return $this->bookings[0];
+        return null;
+    }
 }
