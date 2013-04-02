@@ -252,9 +252,28 @@ class MinervaClient
             'courseId' => $courseId,
         ));
 
-        return $this->client
-            ->getCommand('SetRegistration', $values)
-            ->execute();
+        try{
+            return $this->client->getCommand('SetRegistration', $values)->execute();
+        }
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
+            if($clientErrorResponseException->getCode()===400){
+                try{
+                    $form = $this->serializer->deserialize(
+                        $clientErrorResponseException->getResponse()->getBody(true),
+                        'Ice\\MinervaClientBundle\\Response\\FormError',
+                        'json'
+                    );
+                }
+                catch(\Exception $deserializingException){
+                    //We can't improve the exception - just re-throw the original
+                    throw $clientErrorResponseException;
+                }
+                throw new ValidationException($form, 'Validation error', 400, $clientErrorResponseException);
+            }
+            else{
+                throw $clientErrorResponseException;
+            }
+        }
     }
 
     public function setRegistrationFieldValue($username, $courseId, $stepName, $fieldName, array $values)
@@ -332,25 +351,24 @@ class MinervaClient
         try{
             $this->client->getCommand('CreateBooking', $values)->execute();
         }
-        catch(\Guzzle\Http\Exception\ClientErrorResponseException $badResponseException){
-            try{
-                $responseObject = json_decode($badResponseException->getResponse()->getBody(true));
-                $form = $this->serializer->deserialize(
-                    $badResponseException->getResponse()->getBody(true),
-                    'Ice\\MinervaClientBundle\\Response\\FormError',
-                    'json'
-                );
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
+            if($clientErrorResponseException->getCode()===400){
+                try{
+                    $form = $this->serializer->deserialize(
+                        $clientErrorResponseException->getResponse()->getBody(true),
+                        'Ice\\MinervaClientBundle\\Response\\FormError',
+                        'json'
+                    );
+                }
+                catch(\Exception $deserializingException){
+                    //We can't improve the exception - just re-throw the original
+                    throw $clientErrorResponseException;
+                }
+                throw new ValidationException($form, 'Validation error', 400, $clientErrorResponseException);
             }
-            catch(\Exception $deserializingException){
-                //We can't improve the exception - just re-throw the original
-                throw $badResponseException;
+            else{
+                throw $clientErrorResponseException;
             }
-            throw new ValidationException($form, 'Validation error', 400, $badResponseException);
-        }
-        catch(BadResponseException $e){
-            $string = $e->getRequest()->__toString();
-            echo $e->getResponse()->__toString();
-            echo $string;
         }
     }
 }
