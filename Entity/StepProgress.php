@@ -19,6 +19,18 @@ class StepProgress
     private $stepName;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $description;
+
+    /**
+     * @var int
+     * @JMS\Type("integer")
+     */
+    private $order;
+
+    /**
      * @var \DateTime
      * @JMS\Type("DateTime")
      */
@@ -131,5 +143,41 @@ class StepProgress
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * @param int $order
+     * @return StepProgress
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param string $description
+     * @return StepProgress
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
