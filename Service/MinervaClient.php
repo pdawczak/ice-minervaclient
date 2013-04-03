@@ -344,7 +344,6 @@ class MinervaClient
         ));
 
         try{
-            echo $this->client->getCommand('CreateBooking', $values)->prepare();
             $this->client->getCommand('CreateBooking', $values)->execute();
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
