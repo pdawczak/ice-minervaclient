@@ -344,6 +344,32 @@
                 "courseId": {
                     "location": "uri",
                     "required": true
+                },
+                "bookingItems": {
+                    "location": "json",
+                    "type": "array",
+                    "additionalProperties": {
+                        "code": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "description": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "price": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        },
+                        "category": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        }
+                    }
                 }
             }
         }
