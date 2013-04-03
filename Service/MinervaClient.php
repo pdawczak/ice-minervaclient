@@ -338,17 +338,13 @@ class MinervaClient
      * @throws \Ice\MinervaClientBundle\Exception\ValidationException
      */
     public function createBooking($username, $courseId, array $values){
-        $values = array(
+        $values = array_merge($values, array(
             'username'=>$username,
             'courseId'=>$courseId,
-            'bookedBy'=>$bookedBy
-        );
-
-        if($paymentGroupId){
-            $values['suborderGroupId'] = $paymentGroupId;
-        }
+        ));
 
         try{
+            echo $this->client->getCommand('CreateBooking', $values)->prepare();
             $this->client->getCommand('CreateBooking', $values)->execute();
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){

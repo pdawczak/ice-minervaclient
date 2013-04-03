@@ -299,6 +299,11 @@
                     "required":false,
                     "type":"string"
                 },
+                "bookingDate": {
+                    "location":"json",
+                    "required": false,
+                    "type": "string"
+                },
                 "bookingItems": {
                     "location": "json",
                     "type": "array",
