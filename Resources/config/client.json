@@ -344,10 +344,6 @@
                 "courseId": {
                     "location": "uri",
                     "required": true
-                },
-                "bookedBy": {
-                    "location": "json",
-                    "required": true
                 }
             }
         }
