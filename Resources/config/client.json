@@ -14,7 +14,7 @@
                     "location": "uri",
                     "required": true
                 },
-                "applicationStatusCode": {
+                "status": {
                     "location": "json",
                     "required": true
                 }
@@ -34,7 +34,7 @@
                     "location": "uri",
                     "required": true
                 },
-                "bursaryStatusCode": {
+                "status": {
                     "location": "json",
                     "required": true
                 }
@@ -54,7 +54,7 @@
                     "location": "uri",
                     "required": true
                 },
-                "englishLanguageStatusCode": {
+                "status": {
                     "location": "json",
                     "required": true
                 }

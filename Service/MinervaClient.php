@@ -186,7 +186,7 @@ class MinervaClient
             ->getCommand('SetBursaryStatus', array(
             'username' => $username,
             'courseId' => $courseId,
-            'bursaryStatusCode' => $status,
+            'status' => $status,
         ))->execute();
     }
 
@@ -202,7 +202,7 @@ class MinervaClient
             ->getCommand('SetApplicationStatus', array(
             'username' => $username,
             'courseId' => $courseId,
-            'applicationStatusCode' => $status,
+            'status' => $status,
         ))->execute();
     }
 
@@ -218,7 +218,7 @@ class MinervaClient
             ->getCommand('SetEnglishLanguageStatus', array(
             'username' => $username,
             'courseId' => $courseId,
-            'englishLanguageStatusCode' => $status,
+            'status' => $status,
         ))->execute();
     }
 
@@ -331,13 +331,13 @@ class MinervaClient
 
     /**
      * @param string $username
-     * @param int $courseId
-     * @param string $bookedBy
-     * @param string|null $paymentGroupId
+     * @param int    $courseId
+     * @param array  $values
+     *
+     * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
      * @throws \Ice\MinervaClientBundle\Exception\ValidationException
-     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
      */
-    public function createBooking($username, $courseId, $bookedBy, $paymentGroupId=null){
+    public function createBooking($username, $courseId, array $values){
         $values = array(
             'username'=>$username,
             'courseId'=>$courseId,
