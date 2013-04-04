@@ -20,6 +20,17 @@ class FieldValue
      */
     private $valueSerialized;
 
+    /**
+     * @var int
+     * @JMS\Type("integer")
+     */
+    private $order;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
+    private $description;
 
     /**
      * @JMS\Exclude
@@ -28,7 +39,7 @@ class FieldValue
 
     /**
      * @param string $fieldName
-     * @return FieldName
+     * @return FieldValue
      */
     public function setFieldName($fieldName)
     {
@@ -80,5 +91,41 @@ class FieldValue
     public function getValueSerialized()
     {
         return $this->valueSerialized;
+    }
+
+    /**
+     * @param string $description
+     * @return FieldValue
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param int $order
+     * @return FieldValue
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }
