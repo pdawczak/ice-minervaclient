@@ -2,6 +2,7 @@
 namespace Ice\MinervaClientBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
+use Ice\MinervaClientBundle\Exception\NotFoundException;
 
 class StepProgress
 {
@@ -53,7 +54,13 @@ class StepProgress
      * @JMS\Type("array<Ice\MinervaClientBundle\Entity\FieldValue>")
      * @JMS\SerializedName("fieldValues")
      */
-    private $fieldValues;
+    private $fieldValues = array();
+
+    /**
+     * @var FieldValue[]
+     * @JMS\Exclude
+     */
+    private $fieldValuesByName = array();
 
     /**
      * @param $registrationProgress
@@ -179,5 +186,56 @@ class StepProgress
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function setFieldValues($fieldValues)
+    {
+        $this->fieldValues = $fieldValues;
+        return $this;
+    }
+
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
+    }
+
+    /**
+     * @param $fieldName
+     * @return FieldValue
+     * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
+     */
+    public function getFieldValueByName($fieldName)
+    {
+        foreach($this->fieldValues as $fieldValue){
+            if($fieldValue->getFieldName() === $fieldName){
+                return $fieldValue;
+            }
+        }
+        throw new NotFoundException("Field value with name [".$fieldName."] not present");
+    }
+
+    /**
+     * @param string $name
+     * @param int $order
+     * @param string $description
+     * @param mixed $value The PHP object to be serialized
+     * @return $this
+     */
+    public function setFieldValue($name, $order, $description, $value){
+        try{
+            $existing = $this->getFieldValueByName($name);
+            $existing->setOrder($order)
+                ->setDescription($description)
+                ->setValue($value);
+        }
+        catch(NotFoundException $e){
+            $fieldValue = new FieldValue();
+            $fieldValue->setFieldName($name)
+                ->setValue($value)
+                ->setOrder($order)
+                ->setDescription($description);
+            $this->fieldValues[] = $fieldValue;
+        }
+        return $this;
     }
 }
