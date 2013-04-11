@@ -142,4 +142,15 @@ class Booking{
     {
         return $this->paymentGroupId;
     }
+
+    /**
+     * @return int
+     */
+    public function getBookingTotalPriceInPence(){
+        $total = 0;
+        foreach($this->getBookingItems() as $item){
+            $total += $item->getPrice();
+        }
+        return $total;
+    }
 }
