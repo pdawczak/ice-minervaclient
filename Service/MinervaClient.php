@@ -328,6 +328,30 @@ class MinervaClient
         }
     }
 
+    /**
+     * @param $iceId
+     * @param $courseId
+     * @return AcademicInformation
+     * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
+     */
+    public function getAllAcademicInformationByIceId($iceId){
+        try{
+            $academicInformation = $this->client->getCommand('GetAllAcademicInformation', array(
+                'username'=>$iceId
+            ))->execute();
+            return $academicInformation;
+        }
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $e){
+            if($e->getResponse()->getStatusCode()===404){
+                throw new NotFoundException("Academic information not found for this person and course", 404, $e);
+            }
+            else{
+                throw $e;
+            }
+        }
+    }
+
 
     /**
      * @param string $username

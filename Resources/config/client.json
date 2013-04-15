@@ -101,6 +101,18 @@
                 }
             }
         },
+        "GetAllAcademicInformation": {
+            "httpMethod": "GET",
+            "uri": "api/academicinformation",
+            "summary": "Gets a collection of AcademicInformation records",
+            "responseClass": "array<Ice\\MinervaClientBundle\\Entity\\AcademicInformation>",
+            "parameters": {
+                "username": {
+                    "location": "query",
+                    "required": true
+                }
+            }
+        },
         "GetAcademicInformation": {
             "httpMethod": "GET",
             "uri": "api/academicinformation/{username}/{courseId}",
