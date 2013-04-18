@@ -283,6 +283,18 @@
                 }
             }
         },
+        "GetBooking": {
+            "httpMethod": "GET",
+            "uri": "api/bookings/{id}",
+            "summary": "Get a booking",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\Booking",
+            "parameters": {
+                "id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "CreateBooking": {
             "httpMethod": "PUT",
             "uri": "api/bookings/{username}/{courseId}",

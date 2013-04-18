@@ -390,4 +390,19 @@ class MinervaClient
             }
         }
     }
+
+
+    /**
+     * Get a booking
+     *
+     * @param int $id Booking ID
+     */
+    public function getBooking($id)
+    {
+        $values = array(
+            'id' => $id,
+        );
+
+        return $this->client->getCommand('GetBooking', $values)->execute();
+    }
 }
