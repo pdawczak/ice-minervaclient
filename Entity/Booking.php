@@ -18,7 +18,8 @@ class Booking{
 
     /**
      * @var AcademicInformation
-     * @JMS\Exclude
+     * @JMS\SerializedName("academicInformation");
+     * @JMS\Type("Ice\MinervaClientBundle\Entity\AcademicInformation")
      */
     private $academicInformation;
 
