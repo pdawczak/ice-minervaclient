@@ -13,8 +13,16 @@ class Booking{
     /**
      * @var string
      * @JMS\Type("string")
+     * @JMS\SerializedName("bookedBy")
      */
     private $bookedBy;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     * @JMS\SerializedName("suborderGroup")
+     */
+    private $suborderGroup;
 
     /**
      * @var AcademicInformation
@@ -154,4 +162,13 @@ class Booking{
         }
         return $total;
     }
+
+    /**
+     * @return string
+     */
+    public function getSuborderGroup()
+    {
+        return $this->suborderGroup;
+    }
+
 }
