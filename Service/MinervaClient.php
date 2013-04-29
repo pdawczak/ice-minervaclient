@@ -27,12 +27,19 @@ class MinervaClient
     private $serializer;
 
     /**
-     * @param Client $client
+     * @param Client     $client
      * @param Serializer $serializer
+     * @param string     $username
+     * @param string     $password
      */
-    public function __construct(Client $client, Serializer $serializer)
+    public function __construct(Client $client, Serializer $serializer, $username, $password)
     {
         $this->client = $client;
+        $this->client->setConfig(array(
+            'curl.options' => array(
+                'CURLOPT_USERPWD' => sprintf("%s:%s", $username, $password),
+            ),
+        ));
         $this->serializer = $serializer;
         $this->client->setDefaultHeaders(array(
             'Accept' => 'application/json',

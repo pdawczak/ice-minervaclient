@@ -3,6 +3,7 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
     <services>
         <service
                 id="ice.minerva_client.listener.mercury_group_balance_change_listener"
@@ -37,6 +38,8 @@
                 class="Ice\MinervaClientBundle\Service\MinervaClient">
             <argument type="service" id="minerva_client.guzzle" />
             <argument type="service" id="serializer"/>
+            <argument>%ice_minerva_client.username%</argument>
+            <argument>%ice_minerva_client.password%</argument>
         </service>
     </services>
 </container>
