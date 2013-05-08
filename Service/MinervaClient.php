@@ -412,4 +412,22 @@ class MinervaClient
 
         return $this->client->getCommand('GetBooking', $values)->execute();
     }
+
+    /**
+     * Cancel a booking
+     *
+     * @param $username
+     * @param $courseId
+     *
+     * @return mixed
+     */
+    public function cancelBooking($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('CancelBooking', $values)->execute();
+    }
 }

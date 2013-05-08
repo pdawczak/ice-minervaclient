@@ -295,6 +295,22 @@
                 }
             }
         },
+        "CancelBooking": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/cancel",
+            "summary": "Cancel a booking",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\Booking",
+            "parameters": {
+                "username": {
+                    "location":"uri",
+                    "required":true
+                },
+                "courseId": {
+                    "location":"uri",
+                    "required":true
+                }
+            }
+        },
         "CreateBooking": {
             "httpMethod": "PUT",
             "uri": "api/bookings/{username}/{courseId}",
