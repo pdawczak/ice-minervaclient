@@ -2,7 +2,7 @@
     "name": "ice/minervaclient-bundle",
     "type": "symfony-bundle",
     "description": "Client for the ICE Minerva API",
-    "licence": "MIT",
+    "license": "MIT",
     "authors": [
         {
             "name": "Rob Hogan",
