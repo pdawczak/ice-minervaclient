@@ -430,4 +430,44 @@ class MinervaClient
 
         return $this->client->getCommand('CancelBooking', $values)->execute();
     }
+
+    public function bookingPaymentArranged($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('BookingPaymentArranged', $values)->execute();
+    }
+
+    public function bookingPaymentPart($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('BookingPaymentPart', $values)->execute();
+    }
+
+    public function bookingPaymentBalanced($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('BookingPaymentBalanced', $values)->execute();
+    }
+
+    public function bookingPaymentOverpaid($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('BookingPaymentOverpaid', $values)->execute();
+    }
 }

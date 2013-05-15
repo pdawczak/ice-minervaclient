@@ -412,6 +412,66 @@
                     }
                 }
             }
+        },
+        "BookingPaymentArranged": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/payment/arranged",
+            "summary": "Mark booking as payment has been arranged",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "BookingPaymentPart": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/payment/part",
+            "summary": "Mark booking as part paid",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "BookingPaymentBalanced": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/payment/balanced",
+            "summary": "Mark booking as balanced",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "BookingPaymentOverpaid": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/payment/overpaid",
+            "summary": "Mark booking as overpaid",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
         }
     }
 }
