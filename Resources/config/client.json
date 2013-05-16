@@ -472,6 +472,18 @@
                     "required": true
                 }
             }
+        },
+        "GetBookingItemSummary": {
+            "httpMethod": "GET",
+            "uri": "api/bookingitems/{code}",
+            "summary": "Get summary of a BookingItem",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\BookingItemSummary",
+            "parameters": {
+                "code": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
         }
     }
 }

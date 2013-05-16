@@ -6,6 +6,7 @@ use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Service\Client;
 
 use Ice\MinervaClientBundle\Entity\AcademicInformation;
+use Ice\MinervaClientBundle\Entity\BookingItemSummary;
 use Ice\MinervaClientBundle\Entity\MinervaStatus;
 use Ice\MinervaClientBundle\Exception\ClientErrorResponseException;
 use Ice\MinervaClientBundle\Exception\NotFoundException;
@@ -469,5 +470,19 @@ class MinervaClient
         );
 
         return $this->client->getCommand('BookingPaymentOverpaid', $values)->execute();
+    }
+
+    /**
+     * @param $code
+     *
+     * @return BookingItemSummary
+     */
+    public function getBookingItemSummary($code)
+    {
+        $values = array(
+            'code' => $code,
+        );
+
+        return $this->client->getCommand('GetBookingItemSummary', $values)->execute();
     }
 }
