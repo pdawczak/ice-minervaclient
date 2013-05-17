@@ -38,8 +38,8 @@ class MercuryListener implements EventSubscriberInterface
     {
         $group = $event->getPaymentGroup();
 
-        $username = $group->getAttributeByName('delegate_ice_id');
-        $courseId = $group->getAttributeByName('course_id');
+        $username = $group->getAttributeByName('delegate_ice_id')->getValue();
+        $courseId = $group->getAttributeByName('course_id')->getValue();
 
         if (0 === $group->getNetAmountUnallocated()) {
             $this->minervaClient->bookingPaymentBalanced($username, $courseId);
@@ -72,9 +72,9 @@ class MercuryListener implements EventSubscriberInterface
                 return;
             }
 
-            $username = $group->getAttributeByName('delegate_ice_id');
-            $courseId = $group->getAttributeByName('course_id');
-            $paymentMethod = $group->getAttributeByName('agreed_payment_method');
+            $username = $group->getAttributeByName('delegate_ice_id')->getValue();
+            $courseId = $group->getAttributeByName('course_id')->getValue();
+            $paymentMethod = $group->getAttributeByName('agreed_payment_method')->getValue();
 
             if (in_array($paymentMethod, array('INVOICE', 'STUDENT_LOAN'))) {
                 $this->minervaClient->bookingPaymentArranged($username, $courseId);
