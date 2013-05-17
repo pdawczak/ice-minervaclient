@@ -1,6 +1,8 @@
 <?php
 namespace Ice\MinervaClientBundle\EventListener;
 
+use Guzzle\Http\Exception\BadResponseException;
+use Ice\MercuryBundle\Event\OrderEvent;
 use Ice\MercuryBundle\Event\PaymentGroupEvent;
 use Ice\MinervaClientBundle\Service\MinervaClient;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -38,7 +40,6 @@ class MercuryListener implements EventSubscriberInterface
 
         $username = $group->getAttributeByName('delegate_ice_id');
         $courseId = $group->getAttributeByName('course_id');
-        $paymentMethod = $group->getAttributeByName('agreed_payment_method');
 
         if (0 === $group->getNetAmountUnallocated()) {
             $this->minervaClient->bookingPaymentBalanced($username, $courseId);
@@ -49,8 +50,35 @@ class MercuryListener implements EventSubscriberInterface
             $this->minervaClient->bookingPaymentPart($username, $courseId);
         } elseif ($group->getNetAmountUnallocated() < 0) {
             $this->minervaClient->bookingPaymentOverpaid($username, $courseId);
-        } elseif (in_array($paymentMethod, array('INVOICE', 'STUDENT_LOAN'))) {
-            $this->minervaClient->bookingPaymentArranged($username, $courseId);
+        }
+    }
+
+    /**
+     * An order has been created. This could be for a new booking or an amendment.
+     *
+     * @param OrderEvent $event
+     */
+    public function onCreateOrder(OrderEvent $event)
+    {
+        $suborders = $event->getOrder()->getSuborders();
+
+        foreach ($suborders as $suborder) {
+            $group = $suborder->getPaymentGroup();
+            $numberOfSuborders = count($group->getSuborders());
+
+            if ($numberOfSuborders > 1) {
+                // Payment has already been made on this suborder.
+                // The new order is for an amendment so we don't need to update the payment status in Minerva
+                return;
+            }
+
+            $username = $group->getAttributeByName('delegate_ice_id');
+            $courseId = $group->getAttributeByName('course_id');
+            $paymentMethod = $group->getAttributeByName('agreed_payment_method');
+
+            if (in_array($paymentMethod, array('INVOICE', 'STUDENT_LOAN'))) {
+                $this->minervaClient->bookingPaymentArranged($username, $courseId);
+            }
         }
     }
 
@@ -61,6 +89,7 @@ class MercuryListener implements EventSubscriberInterface
     {
         return array(
             'mercury.post_group_balance_change' => 'onGroupBalanceChange',
+            'mercury.post_create_order' => 'onCreateOrder',
         );
     }
 }

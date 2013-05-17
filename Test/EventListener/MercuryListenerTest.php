@@ -1,7 +1,8 @@
 <?php
 
-namespace Ice\MinervaClientBundle\Test\Service;
+namespace Ice\MinervaClientBundle\Test\EventListener;
 
+use Ice\MercuryBundle\Entity\Suborder;
 use Ice\MinervaClientBundle\EventListener\MercuryListener;
 
 class MercuryListenerTest extends \PHPUnit_Framework_TestCase
@@ -14,12 +15,10 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->method('bookingPaymentArranged')
         ;
 
-        $paymentGroup = $this->getPaymentGroup('INVOICE');
-
-        $event = $this->getEvent($paymentGroup);
+        $event = $this->getOrderEvent($this->getOrder('INVOICE'));
 
         $listener = new MercuryListener($client);
-        $listener->onGroupBalanceChange($event);
+        $listener->onCreateOrder($event);
     }
 
     public function testPaymentMethodStudentLoanNoPaymentIsStatusArranged()
@@ -30,12 +29,10 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->method('bookingPaymentArranged')
         ;
 
-        $paymentGroup = $this->getPaymentGroup('STUDENT_LOAN');
-
-        $event = $this->getEvent($paymentGroup);
+        $event = $this->getOrderEvent($this->getOrder('STUDENT_LOAN'));
 
         $listener = new MercuryListener($client);
-        $listener->onGroupBalanceChange($event);
+        $listener->onCreateOrder($event);
     }
 
     public function testPaymentMethodPdqNoPaymentIsNoOp()
@@ -65,7 +62,7 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValueMap($this->getAttributeValueMap('PDQ')))
         ;
 
-        $event = $this->getEvent($paymentGroup);
+        $event = $this->getPaymentGroupEvent($paymentGroup);
 
         $listener = new MercuryListener($client);
         $listener->onGroupBalanceChange($event);
@@ -91,7 +88,7 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(150))
         ;
 
-        $event = $this->getEvent($paymentGroup);
+        $event = $this->getPaymentGroupEvent($paymentGroup);
 
         $listener = new MercuryListener($client);
         $listener->onGroupBalanceChange($event);
@@ -112,7 +109,7 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(0))
         ;
 
-        $event = $this->getEvent($paymentGroup);
+        $event = $this->getPaymentGroupEvent($paymentGroup);
 
         $listener = new MercuryListener($client);
         $listener->onGroupBalanceChange($event);
@@ -133,7 +130,7 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(-50))
         ;
 
-        $event = $this->getEvent($paymentGroup);
+        $event = $this->getPaymentGroupEvent($paymentGroup);
 
         $listener = new MercuryListener($client);
         $listener->onGroupBalanceChange($event);
@@ -172,18 +169,55 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         return $paymentGroup;
     }
 
+    private function getOrder($secondPaymentType)
+    {
+        $suborder1 = new Suborder();
+        $suborder1->setPaymentGroup($this->getPaymentGroup());
+        $suborder2 = new Suborder();
+        $suborder2->setPaymentGroup($this->getPaymentGroup($secondPaymentType));
+
+        $order = $this->getMock('Ice\MercuryBundle\Entity\Order');
+        $order
+            ->expects($this->any())
+            ->method('getSuborders')
+            ->will($this->returnValue(array(
+                $suborder1,
+                $suborder2,
+            )))
+        ;
+
+        return $order;
+    }
+
     /**
      * @param $paymentGroup
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getEvent($paymentGroup)
+    private function getPaymentGroupEvent($paymentGroup)
     {
         $event = $this->getMock('Ice\MercuryBundle\Event\PaymentGroupEvent', array(), array($paymentGroup), '', false);
         $event
             ->expects($this->any())
             ->method('getPaymentGroup')
             ->will($this->returnValue($paymentGroup))
+        ;
+
+        return $event;
+    }
+
+    /**
+     * @param $order
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getOrderEvent($order)
+    {
+        $event = $this->getMock('Ice\MercuryBundle\Event\OrderEvent', array(), array($order), '', false);
+        $event
+            ->expects($this->any())
+            ->method('getOrder')
+            ->will($this->returnValue($order))
         ;
 
         return $event;
