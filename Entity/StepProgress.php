@@ -194,6 +194,9 @@ class StepProgress
         return $this;
     }
 
+    /**
+     * @return array|FieldValue[]
+     */
     public function getFieldValues()
     {
         return $this->fieldValues;
