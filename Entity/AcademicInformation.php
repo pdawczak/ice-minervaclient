@@ -27,6 +27,13 @@ class AcademicInformation{
     /**
      * @var string
      * @JMS\Type("string")
+     * @JMS\SerializedName("applicationStatusCode")
+     */
+    private $applicationStatusCode;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
      * @JMS\SerializedName("username")
      */
     private $iceId;
@@ -119,5 +126,23 @@ class AcademicInformation{
     public function getActiveBooking(){
         if($this->bookings) return $this->bookings[0];
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationStatusCode()
+    {
+        return $this->applicationStatusCode;
+    }
+
+    /**
+     * @param string $applicationStatusCode
+     * @return AcademicInformation
+     */
+    public function setApplicationStatusCode($applicationStatusCode)
+    {
+        $this->applicationStatusCode = $applicationStatusCode;
+        return $this;
     }
 }
