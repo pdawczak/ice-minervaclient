@@ -21,6 +21,20 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onCreateOrder($event);
     }
 
+    public function testPaymentMethodInvoiceNoPaymentIsStatusCommitted()
+    {
+        $client = $this->getMinervaClient();
+        $client
+            ->expects($this->once())
+            ->method('bookingPaymentCommitted')
+        ;
+
+        $event = $this->getOrderEvent($this->getOrder('INVOICE'));
+
+        $listener = new MercuryListener($client);
+        $listener->onCreateOrder($event);
+    }
+
     public function testPaymentMethodStudentLoanNoPaymentIsStatusArranged()
     {
         $client = $this->getMinervaClient();
@@ -230,10 +244,31 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getAttributeValueMap($paymentType)
     {
+        $delegate = $this->getMock('Ice\MercuryBundle\Entity\PaymentGroupAttribute');
+        $delegate
+            ->expects($this->any())
+            ->method('getValue')
+            ->will($this->returnValue('abc12'))
+        ;
+
+        $course = $this->getMock('Ice\MercuryBundle\Entity\PaymentGroupAttribute');
+        $course
+            ->expects($this->any())
+            ->method('getValue')
+            ->will($this->returnValue('1234'))
+        ;
+
+        $method = $this->getMock('Ice\MercuryBundle\Entity\PaymentGroupAttribute');
+        $method
+            ->expects($this->any())
+            ->method('getValue')
+            ->will($this->returnValue($paymentType))
+        ;
+
         return array(
-            array('delegate_ice_id', 'abc12'),
-            array('course_id', 1234),
-            array('agreed_payment_method', $paymentType),
+            array('delegate_ice_id', $delegate),
+            array('course_id', $course),
+            array('agreed_payment_method', $method),
         );
     }
 

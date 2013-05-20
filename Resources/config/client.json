@@ -428,6 +428,21 @@
                 }
             }
         },
+        "BookingPaymentCommitted": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/payment/committed",
+            "summary": "Mark booking as payment has been committed",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "BookingPaymentPart": {
             "httpMethod": "POST",
             "uri": "api/bookings/{username}/{courseId}/payment/part",

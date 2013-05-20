@@ -442,6 +442,16 @@ class MinervaClient
         return $this->client->getCommand('BookingPaymentArranged', $values)->execute();
     }
 
+    public function bookingPaymentCommitted($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('BookingPaymentCommitted', $values)->execute();
+    }
+
     public function bookingPaymentPart($username, $courseId)
     {
         $values = array(
