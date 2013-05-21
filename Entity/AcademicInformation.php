@@ -4,6 +4,7 @@ namespace Ice\MinervaClientBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ice\VeritasClientBundle\Entity\Course;
 
 /**
  * Class AcademicInformation
@@ -52,6 +53,12 @@ class AcademicInformation
      * @JMS\SerializedName("courseId")
      */
     private $courseId;
+
+    /**
+     * @var Course
+     * @JMS\Exclude()
+     */
+    private $course;
 
     /**
      * @return ArrayCollection|Booking[]
@@ -203,5 +210,29 @@ class AcademicInformation
     public function getPaymentStatusCode()
     {
         return $this->paymentStatusCode;
+    }
+
+    /**
+     * @param \Ice\VeritasClientBundle\Entity\Course $course
+     * @return AcademicInformation
+     */
+    public function setCourse($course)
+    {
+        $this->course = $course;
+        return $this;
+    }
+
+    /**
+     * Returns the VeritasClientBundle course object against this entity. Must be set first.
+     *
+     * @return Course
+     * @throws \RuntimeException if not set
+     */
+    public function getCourse()
+    {
+        if (null === $this->course) {
+            throw new \RuntimeException("Course not set");
+        }
+        return $this->course;
     }
 }
