@@ -10,7 +10,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @package Ice\MinervaClientBundle\Entity
  * @JMS\AccessType("public_method")
  */
-class AcademicInformation{
+class AcademicInformation
+{
     /**
      * @var Booking[]|ArrayCollection;
      * @JMS\Type("array<Ice\MinervaClientBundle\Entity\Booking>")
@@ -60,7 +61,7 @@ class AcademicInformation{
     public function setBookings($bookings)
     {
         $this->bookings = $bookings;
-        foreach($this->bookings as $booking){
+        foreach ($this->bookings as $booking) {
             $booking->setAcademicInformation($this);
         }
         return $this;
@@ -123,8 +124,9 @@ class AcademicInformation{
     /**
      * @return Booking|null
      */
-    public function getActiveBooking(){
-        if($this->bookings) return $this->bookings[0];
+    public function getActiveBooking()
+    {
+        if ($this->bookings) return $this->bookings[0];
         return null;
     }
 
@@ -144,5 +146,37 @@ class AcademicInformation{
     {
         $this->applicationStatusCode = $applicationStatusCode;
         return $this;
+    }
+
+    /**
+     * Return true if the course application has accepted status, false otherwise
+     *
+     * @return bool
+     */
+    public function isApplicationAccepted()
+    {
+        return $this->getApplicationStatusCode() === MinervaStatus::ApplicationAccepted;
+    }
+
+    /**
+     * Return true if the course application has rejected status, false otherwise
+     *
+     * @return bool
+     */
+    public function isApplicationRejected()
+    {
+        return $this->getApplicationStatusCode() === MinervaStatus::ApplicationRejected;
+    }
+
+    /**
+     * Return true if an application has been received but not accepted or rejected
+     *
+     * @return bool
+     */
+    public function isApplicationPending()
+    {
+        return $this->getApplicationStatusCode() !== null &&
+            !$this->isApplicationAccepted() &&
+            !$this->isApplicationRejected();
     }
 }
