@@ -35,6 +35,13 @@ class AcademicInformation
     /**
      * @var string
      * @JMS\Type("string")
+     * @JMS\SerializedName("paymentStatusCode")
+     */
+    private $paymentStatusCode;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
      * @JMS\SerializedName("username")
      */
     private $iceId;
@@ -178,5 +185,23 @@ class AcademicInformation
         return $this->getApplicationStatusCode() !== null &&
             !$this->isApplicationAccepted() &&
             !$this->isApplicationRejected();
+    }
+
+    /**
+     * @param string $paymentStatusCode
+     * @return AcademicInformation
+     */
+    public function setPaymentStatusCode($paymentStatusCode)
+    {
+        $this->paymentStatusCode = $paymentStatusCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentStatusCode()
+    {
+        return $this->paymentStatusCode;
     }
 }

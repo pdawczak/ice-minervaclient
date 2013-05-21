@@ -3,7 +3,8 @@ namespace Ice\MinervaClientBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 
-class Booking{
+class Booking
+{
     /**
      * @var int
      * @JMS\Type("integer")
@@ -95,7 +96,7 @@ class Booking{
     public function setBookingItems($bookingItems)
     {
         $this->bookingItems = $bookingItems;
-        foreach($this->bookingItems as $bookingItem){
+        foreach ($this->bookingItems as $bookingItem) {
             $bookingItem->setBooking($this);
         }
         return $this;
@@ -112,7 +113,8 @@ class Booking{
     /**
      * @return int
      */
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -155,9 +157,10 @@ class Booking{
     /**
      * @return int
      */
-    public function getBookingTotalPriceInPence(){
+    public function getBookingTotalPriceInPence()
+    {
         $total = 0;
-        foreach($this->getBookingItems() as $item){
+        foreach ($this->getBookingItems() as $item) {
             $total += $item->getPrice();
         }
         return $total;
@@ -171,4 +174,18 @@ class Booking{
         return $this->suborderGroup;
     }
 
+    /**
+     * True if the items on this booking are allocated to the delegate (permanently or temporarily)
+     *
+     * @return bool
+     */
+    public function isAllocated()
+    {
+        if (!$this->getAcademicInformation()) {
+            throw new \LogicException("Is allocated cannot be called on a booking which is not attached to AcademicInformation");
+        }
+        //TODO: In future should return true if the booking is allocated temporarily.
+        return $this->getAcademicInformation()->getRegistrationStatusCode() === MinervaStatus::RegistrationComplete &&
+            $this->getAcademicInformation()->getPaymentStatusCode() !== null;
+    }
 }

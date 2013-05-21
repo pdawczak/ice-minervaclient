@@ -30,4 +30,12 @@ class MinervaStatus
     const WaitingForToeflTest = 'WAITING_FOR_TOEFL_TEST';
     const RegistrationInProgress = 'REGISTRATION_IN_PROGRESS';
     const RegistrationComplete = 'REGISTRATION_COMPLETE';
+    const RegistrationCancelled = 'REGISTRATION_CANCELLED';
+    const PaymentArranged = 'PAYMENT_ARRANGED';
+    const PaymentCommitted = 'PAYMENT_COMMITTED';
+    const PaymentPartPaid = 'PAYMENT_PART_PAID';
+    const PaymentBalanced = 'PAYMENT_BALANCED';
+    const PaymentOverpaid = 'PAYMENT_OVERPAID';
+    const EnrolmentReadyToEnrol = 'ENROLMENT_READY';
+    const EnrolmentEnrolled = 'ENROLMENT_ENROLLED';
 }
