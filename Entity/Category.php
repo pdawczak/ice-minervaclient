@@ -6,6 +6,12 @@ use JMS\Serializer\Annotation as JMS;
 class Category
 {
     /**
+     * @var integer
+     * @JMS\Type("integer")
+     */
+    private $id;
+
+    /**
      * @var string
      * @JMS\Type("string")
      */
@@ -38,6 +44,7 @@ class Category
     /**
      * @param string $code
      * @return Category
+     * @deprecated Use setId() instead
      */
     public function setCode($code)
     {
@@ -47,9 +54,29 @@ class Category
 
     /**
      * @return string
+     * @deprecated Use getId() instead
      */
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Category
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
