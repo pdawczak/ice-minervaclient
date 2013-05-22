@@ -26,6 +26,13 @@ class Booking
     private $suborderGroup;
 
     /**
+     * @var \DateTime
+     * @JMS\Type("DateTime")
+     * @JMS\SerializedName("cancelledDate")
+     */
+    private $cancelledDate;
+
+    /**
      * @var AcademicInformation
      * @JMS\SerializedName("academicInformation");
      * @JMS\Type("Ice\MinervaClientBundle\Entity\AcademicInformation")
@@ -172,6 +179,14 @@ class Booking
     public function getSuborderGroup()
     {
         return $this->suborderGroup;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCancelledDate()
+    {
+        return $this->cancelledDate;
     }
 
     /**
