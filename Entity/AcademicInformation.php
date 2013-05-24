@@ -195,6 +195,16 @@ class AcademicInformation
     }
 
     /**
+     * Return true if the course registration is complete
+     *
+     * @return bool
+     */
+    public function isRegistrationComplete()
+    {
+        return $this->getRegistrationStatusCode() === MinervaStatus::RegistrationComplete;
+    }
+
+    /**
      * @param string $paymentStatusCode
      * @return AcademicInformation
      */
