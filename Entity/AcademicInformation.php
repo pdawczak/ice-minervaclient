@@ -191,8 +191,8 @@ class AcademicInformation
     public function isApplicationPending()
     {
         return $this->getApplicationStatusCode() !== null &&
-            !$this->isApplicationAccepted() &&
-            !$this->isApplicationRejected();
+        !$this->isApplicationAccepted() &&
+        !$this->isApplicationRejected();
     }
 
     /**
@@ -246,8 +246,7 @@ class AcademicInformation
         if (null === $this->course) {
             if (null === $veritasClient) {
                 throw new \RuntimeException("Course not set");
-            }
-            else {
+            } else {
                 $this->course = $veritasClient->getCourse($this->getCourseId());
             }
         }
