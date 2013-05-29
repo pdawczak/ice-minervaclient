@@ -5,6 +5,7 @@ namespace Ice\MinervaClientBundle\Entity;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ice\VeritasClientBundle\Entity\Course;
+use Ice\VeritasClientBundle\Service\VeritasClient;
 
 /**
  * Class AcademicInformation
@@ -233,15 +234,22 @@ class AcademicInformation
     }
 
     /**
-     * Returns the VeritasClientBundle course object against this entity. Must be set first.
+     * Returns the VeritasClientBundle course object against this entity. If it is not set and a $veritasClient is
+     * provided, it will be fetched from the API.
      *
+     * @param VeritasClient $veritasClient
      * @return Course
      * @throws \RuntimeException if not set
      */
-    public function getCourse()
+    public function getCourse($veritasClient = null)
     {
         if (null === $this->course) {
-            throw new \RuntimeException("Course not set");
+            if (null === $veritasClient) {
+                throw new \RuntimeException("Course not set");
+            }
+            else {
+                return $veritasClient->getCourse($this->getCourseId());
+            }
         }
         return $this->course;
     }
