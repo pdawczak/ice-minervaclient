@@ -248,7 +248,7 @@ class AcademicInformation
                 throw new \RuntimeException("Course not set");
             }
             else {
-                return $veritasClient->getCourse($this->getCourseId());
+                $this->course = $veritasClient->getCourse($this->getCourseId());
             }
         }
         return $this->course;
