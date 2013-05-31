@@ -5,6 +5,13 @@ use JMS\Serializer\Annotation as JMS;
 
 class Category
 {
+    const TUITION_CATEGORY = 5;
+    const COURSE_ACCOMMODATION_CATEGORY = 6;
+    const ADDITIONAL_ACCOMMODATION_CATEGORY = 7;
+    const EVENING_PLATTER_CATEGORY = 8;
+    const MISCELLANEOUS_CATEGORY = 9;
+    const DISCOUNT_CATEGORY = 10;
+
     /**
      * @var integer
      * @JMS\Type("integer")
