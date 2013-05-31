@@ -316,15 +316,27 @@ class MinervaClient
      * @param $courseId
      * @return AcademicInformation
      * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws BadResponseException
      * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
      */
     public function getAcademicInformation($iceId, $courseId){
         try{
-            $academicInformation = $this->client->getCommand('GetAcademicInformation', array(
+            $command = $this->client->getCommand('GetAcademicInformation', array(
                 'username'=>$iceId,
                 'courseId'=>$courseId
-            ))->execute();
-            return $academicInformation;
+            ));
+
+            $academicInformation = $command->execute();
+
+            if($academicInformation instanceof AcademicInformation) {
+                return $academicInformation;
+            }
+            else {
+                $e = new BadResponseException("Response cannot be parsed into an AcademicInformation");
+                $e->setResponse($command->getResponse());
+                $e->setRequest($command->getRequest());
+                throw $e;
+            }
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $e){
             if($e->getResponse()->getStatusCode()===404){
