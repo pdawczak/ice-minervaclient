@@ -151,7 +151,7 @@ class BookingItem
     }
 
     /**
-     * Sets all appropriate properties on this booking item to match a course booking item. WILL NOT set the category.
+     * Sets all appropriate properties on this booking item to match a course booking item.
      *
      * @param \Ice\VeritasClientBundle\Entity\BookingItem $courseBookingItem
      * @return BookingItem
@@ -163,9 +163,18 @@ class BookingItem
             ->setDescription($courseBookingItem->getTitle())
             ->setPrice($courseBookingItem->getPrice())
         ;
+
+        if (
+            null === $this->getCategory() ||
+            $this->getCategory()->getId() !== $courseBookingItem->getCategory()
+        ) {
+            $this->setCategory(
+                (new Category())->setId($courseBookingItem->getCategory())
+            );
+        }
         return $this;
     }
-    
+
     /**
      * @return bool
      */
