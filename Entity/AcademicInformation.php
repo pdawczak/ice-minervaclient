@@ -206,6 +206,16 @@ class AcademicInformation
     }
 
     /**
+     * Return true if the payment status is (exactly) arranged
+     *
+     * @return bool
+     */
+    public function isPaymentStatusArranged()
+    {
+        return $this->getPaymentStatusCode() === MinervaStatus::PaymentArranged;
+    }
+
+    /**
      * @param string $paymentStatusCode
      * @return AcademicInformation
      */
