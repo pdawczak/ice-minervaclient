@@ -3,7 +3,8 @@ namespace Ice\MinervaClientBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 
-class BookingItem{
+class BookingItem
+{
     /**
      * @var Booking
      * @JMS\Exclude
@@ -147,5 +148,37 @@ class BookingItem{
     public function getStatusCode()
     {
         return $this->statusCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCourseAccommodation()
+    {
+        return $this->getCategory()->getId() === Category::COURSE_ACCOMMODATION_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdditionalAccommodation()
+    {
+        return $this->getCategory()->getId() === Category::ADDITIONAL_ACCOMMODATION_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTuition()
+    {
+        return $this->getCategory()->getId() === Category::TUITION_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEveningPlatter()
+    {
+        return $this->getCategory()->getId() === Category::EVENING_PLATTER_CATEGORY;
     }
 }
