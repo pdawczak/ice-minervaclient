@@ -223,7 +223,7 @@ class Booking
         }
         //TODO: In future should return true if the booking is allocated temporarily.
         return $this->getAcademicInformation()->getRegistrationStatusCode() === MinervaStatus::RegistrationComplete &&
-            $this->getAcademicInformation()->getPaymentStatusCode() !== null;
+            !in_array($this->getAcademicInformation()->getPaymentStatusCode(), array(null, MinervaStatus::PaymentArranged));
     }
 
     /**
