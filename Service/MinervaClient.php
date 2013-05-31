@@ -243,7 +243,6 @@ class MinervaClient
 
     public function setRegistrationStep($username, $courseId, array $values)
     {
-        var_dump('set');
         $values = array_merge($values, array(
             'username' => $username,
             'courseId' => $courseId,
@@ -416,12 +415,15 @@ class MinervaClient
      * @param $username
      * @param $courseId
      * @param Booking $booking
+     * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws \Ice\MinervaClientBundle\Exception\ValidationException
      */
     public function updateBooking($username, $courseId, Booking $booking) {
         $values = array(
             'username'=>$username,
             'courseId'=>$courseId,
             'bookedBy'=>$booking->getBookedBy(),
+            'orderReference'=>$booking->getOrderReference(),
             'suborderGroup'=>$booking->getSuborderGroup(),
             'bookingItems'=>[]
         );
@@ -431,7 +433,7 @@ class MinervaClient
                 'code'=>$bookingItem->getCode(),
                 'description'=>$bookingItem->getDescription(),
                 'price'=>$bookingItem->getPrice(),
-                'category'=>$bookingItem->getCategory(),
+                'category'=>$bookingItem->getCategory()->getId(),
             ];
         }
 
