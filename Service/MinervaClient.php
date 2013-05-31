@@ -412,6 +412,53 @@ class MinervaClient
         }
     }
 
+    /**
+     * @param $username
+     * @param $courseId
+     * @param Booking $booking
+     */
+    public function updateBooking($username, $courseId, Booking $booking) {
+        $values = array(
+            'username'=>$username,
+            'courseId'=>$courseId,
+            'bookedBy'=>$booking->getBookedBy(),
+            'suborderGroup'=>$booking->getSuborderGroup(),
+            'bookingItems'=>[]
+        );
+
+        foreach($booking->getBookingItems() as $bookingItem){
+            $values['bookingItems'][] = [
+                'code'=>$bookingItem->getCode(),
+                'description'=>$bookingItem->getDescription(),
+                'price'=>$bookingItem->getPrice(),
+                'category'=>$bookingItem->getCategory(),
+            ];
+        }
+
+        try{
+            $this->client->getCommand('CreateBooking', $values)->execute();
+        }
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
+            if($clientErrorResponseException->getCode()===400){
+                try{
+                    $form = $this->serializer->deserialize(
+                        $clientErrorResponseException->getResponse()->getBody(true),
+                        'Ice\\MinervaClientBundle\\Response\\FormError',
+                        'json'
+                    );
+                }
+                catch(\Exception $deserializingException){
+                    //We can't improve the exception - just re-throw the original
+                    throw $clientErrorResponseException;
+                }
+                throw new ValidationException($form, 'Validation error', 400, $clientErrorResponseException);
+            }
+            else{
+                throw $clientErrorResponseException;
+            }
+        }
+    }
+
 
     /**
      * Get a booking

@@ -1,6 +1,7 @@
 <?php
 namespace Ice\MinervaClientBundle\Entity;
 
+use Ice\VeritasClientBundle\Entity\BookingItem as CourseBookingItem;
 use JMS\Serializer\Annotation as JMS;
 
 class Booking
@@ -24,6 +25,13 @@ class Booking
      * @JMS\SerializedName("suborderGroup")
      */
     private $suborderGroup;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     * @JMS\SerializedName("orderReference")
+     */
+    private $orderReference;
 
     /**
      * @var \DateTime
@@ -118,6 +126,19 @@ class Booking
     }
 
     /**
+     * @param CourseBookingItem $courseBookingItem
+     * @return Booking
+     */
+    public function addBookingItemByCourseBookingItem(CourseBookingItem $courseBookingItem)
+    {
+        $newItem = new BookingItem();
+        $newItem->setAllByCourseBookingItem($courseBookingItem);
+        $newItem->setBooking($this);
+        $this->bookingItems[] = $newItem;
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -192,6 +213,7 @@ class Booking
     /**
      * True if the items on this booking are allocated to the delegate (permanently or temporarily)
      *
+     * @throws \LogicException if the booking does not have an AcademicInformation set
      * @return bool
      */
     public function isAllocated()
@@ -202,5 +224,23 @@ class Booking
         //TODO: In future should return true if the booking is allocated temporarily.
         return $this->getAcademicInformation()->getRegistrationStatusCode() === MinervaStatus::RegistrationComplete &&
             $this->getAcademicInformation()->getPaymentStatusCode() !== null;
+    }
+
+    /**
+     * @param string $orderReference
+     * @return Booking
+     */
+    public function setOrderReference($orderReference)
+    {
+        $this->orderReference = $orderReference;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderReference()
+    {
+        return $this->orderReference;
     }
 }
