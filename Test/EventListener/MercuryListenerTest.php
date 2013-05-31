@@ -150,6 +150,19 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onGroupBalanceChange($event);
     }
 
+    public function testBookingOrderReferenceSetWhenOrderCreated()
+    {
+        $client = $this->getMinervaClient();
+        $client
+            ->expects($this->exactly(2))
+            ->method('setBookingOrderReference')
+        ;
+
+        $event = $this->getOrderEvent($this->getOrder('INVOICE'));
+        $listener = new MercuryListener($client);
+        $listener->onCreateOrder($event);
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */

@@ -61,6 +61,7 @@ class MercuryListener implements EventSubscriberInterface
     public function onCreateOrder(OrderEvent $event)
     {
         $suborders = $event->getOrder()->getSuborders();
+        $reference = $event->getOrder()->getReference();
 
         foreach ($suborders as $suborder) {
             $group = $suborder->getPaymentGroup();
@@ -83,6 +84,8 @@ class MercuryListener implements EventSubscriberInterface
             } else {
                 $this->minervaClient->bookingPaymentArranged($username, $courseId);
             }
+
+            $this->minervaClient->setBookingOrderReference($username, $courseId, $reference);
         }
     }
 

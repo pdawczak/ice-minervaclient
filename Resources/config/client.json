@@ -488,6 +488,25 @@
                 }
             }
         },
+        "SetBookingOrderReference": {
+            "httpMethod": "PUT",
+            "uri": "api/bookings/{username}/{courseId}/order-reference/{reference}",
+            "summary": "Set order reference for booking",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "reference": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "GetBookingItemSummary": {
             "httpMethod": "GET",
             "uri": "api/bookingitems/{code}",

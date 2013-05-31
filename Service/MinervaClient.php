@@ -192,10 +192,10 @@ class MinervaClient
     {
         return $this->client
             ->getCommand('SetBursaryStatus', array(
-            'username' => $username,
-            'courseId' => $courseId,
-            'status' => $status,
-        ))->execute();
+                'username' => $username,
+                'courseId' => $courseId,
+                'status' => $status,
+            ))->execute();
     }
 
     /**
@@ -208,10 +208,10 @@ class MinervaClient
     {
         return $this->client
             ->getCommand('SetApplicationStatus', array(
-            'username' => $username,
-            'courseId' => $courseId,
-            'status' => $status,
-        ))->execute();
+                'username' => $username,
+                'courseId' => $courseId,
+                'status' => $status,
+            ))->execute();
     }
 
     /**
@@ -224,25 +224,26 @@ class MinervaClient
     {
         return $this->client
             ->getCommand('SetEnglishLanguageStatus', array(
-            'username' => $username,
-            'courseId' => $courseId,
-            'status' => $status,
-        ))->execute();
+                'username' => $username,
+                'courseId' => $courseId,
+                'status' => $status,
+            ))->execute();
     }
 
     public function getRegistrationStep($username, $courseId, $stepName)
     {
         return $this->client
             ->getCommand('GetRegistrationStep', array(
-            'username' => $username,
-            'courseId' => $courseId,
-            'stepName' => $stepName,
-        ))
+                'username' => $username,
+                'courseId' => $courseId,
+                'stepName' => $stepName,
+            ))
             ->execute();
     }
 
     public function setRegistrationStep($username, $courseId, array $values)
     {
+        var_dump('set');
         $values = array_merge($values, array(
             'username' => $username,
             'courseId' => $courseId,
@@ -506,5 +507,23 @@ class MinervaClient
         );
 
         return $this->client->getCommand('GetBookingItemSummary', $values)->execute();
+    }
+
+    /**
+     * @param $username
+     * @param $courseId
+     * @param $reference
+     *
+     * @return Booking
+     */
+    public function setBookingOrderReference($username, $courseId, $reference)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+            'reference' => $reference
+        );
+
+        return $this->client->getCommand('SetBookingOrderReference', $values)->execute();
     }
 }
