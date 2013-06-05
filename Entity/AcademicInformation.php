@@ -184,15 +184,26 @@ class AcademicInformation
     }
 
     /**
-     * Return true if an application has been received but not accepted or rejected
+     * Return true if the course application has lapsed status, false otherwise
+     *
+     * @return bool
+     */
+    public function isApplicationLapsed()
+    {
+        return $this->getApplicationStatusCode() === MinervaStatus::ApplicationLapsed;
+    }
+
+    /**
+     * Return true if an application has been received but not accepted, rejected or lapsed
      *
      * @return bool
      */
     public function isApplicationPending()
     {
         return $this->getApplicationStatusCode() !== null &&
-        !$this->isApplicationAccepted() &&
-        !$this->isApplicationRejected();
+            !$this->isApplicationAccepted() &&
+            !$this->isApplicationRejected() &&
+            !$this->isApplicationLapsed();
     }
 
     /**
