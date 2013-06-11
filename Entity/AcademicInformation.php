@@ -194,7 +194,17 @@ class AcademicInformation
     }
 
     /**
-     * Return true if an application has been received but not accepted, rejected or lapsed
+     * Return true if the course application has been withdrawn by the student
+     *
+     * @return bool
+     */
+    public function isApplicationWithdrawn()
+    {
+        return $this->getApplicationStatusCode() === MinervaStatus::ApplicationWithdrawnByStudent;
+    }
+
+    /**
+     * Return true if an application has been received but not accepted, rejected, lapsed or withdrawn
      *
      * @return bool
      */
@@ -203,7 +213,8 @@ class AcademicInformation
         return $this->getApplicationStatusCode() !== null &&
             !$this->isApplicationAccepted() &&
             !$this->isApplicationRejected() &&
-            !$this->isApplicationLapsed();
+            !$this->isApplicationLapsed() &&
+            !$this->isApplicationWithdrawn();
     }
 
     /**
