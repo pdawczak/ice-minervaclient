@@ -141,7 +141,12 @@ class AcademicInformation
      */
     public function getActiveBooking()
     {
-        if ($this->bookings) return $this->bookings[0];
+        foreach ($this->getBookings() as $booking) {
+            if (!$booking->getCancelledDate()) {
+                return $booking;
+            }
+        }
+
         return null;
     }
 
