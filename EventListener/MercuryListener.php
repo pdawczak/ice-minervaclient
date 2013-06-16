@@ -77,9 +77,9 @@ class MercuryListener implements EventSubscriberInterface
             $courseId = $group->getAttributeByName('course_id')->getValue();
             $paymentMethod = $group->getAttributeByName('agreed_payment_method')->getValue();
 
-            // It is assumed that invoices and student loans will be paid so a place is allocated.
+            // It is assumed that invoices and student loans (and others, see WPMR-236) will be paid so a place is allocated.
             // Other payment methods will be held for the appropriate amount of time and lost, unless payment is received.
-            if (in_array($paymentMethod, array('INVOICE', 'STUDENT_LOAN'))) {
+            if (in_array($paymentMethod, array('INVOICE', 'STUDENT_LOAN', 'CHEQUE', 'BACS', 'PDQ'))) {
                 $this->minervaClient->bookingPaymentCommitted($username, $courseId);
             } else {
                 $this->minervaClient->bookingPaymentArranged($username, $courseId);
