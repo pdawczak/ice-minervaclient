@@ -27,6 +27,13 @@ class Booking
     private $suborderGroup;
 
     /**
+     * @var \DateTime
+     * @JMS\Type("DateTime")
+     * @JMS\SerializedName("bookingDate")
+     */
+    private $bookingDate;
+
+    /**
      * @var string
      * @JMS\Type("string")
      * @JMS\SerializedName("orderReference")
@@ -274,5 +281,13 @@ class Booking
             }
             return $items;
         }
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBookingDate()
+    {
+        return $this->bookingDate;
     }
 }

@@ -423,6 +423,7 @@ class MinervaClient
             'username'=>$username,
             'courseId'=>$courseId,
             'bookedBy'=>$booking->getBookedBy(),
+            'bookingDate'=>$booking->getBookingDate()->format('c'),
             'orderReference'=>$booking->getOrderReference(),
             'suborderGroup'=>$booking->getSuborderGroup(),
             'bookingItems'=>[]
