@@ -86,4 +86,52 @@ class Category
     {
         return $this->id;
     }
+
+    /**
+     * @return bool
+     */
+    public function isTuition()
+    {
+        return $this->getId() === self::TUITION_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCourseAccommodation()
+    {
+        return $this->getId() === self::COURSE_ACCOMMODATION_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdditionalAccommodation()
+    {
+        return $this->getId() === self::ADDITIONAL_ACCOMMODATION_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEveningPlatter()
+    {
+        return $this->getId() === self::EVENING_PLATTER_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMiscellaneous()
+    {
+        return $this->getId() === self::MISCELLANEOUS_CATEGORY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDiscount()
+    {
+        return $this->getId() === self::DISCOUNT_CATEGORY;
+    }
 }
