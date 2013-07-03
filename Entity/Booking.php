@@ -290,4 +290,30 @@ class Booking
     {
         return $this->bookingDate;
     }
+
+    /**
+     * @param $fieldName
+     * @return FieldValue|null
+     */
+    public function getNormalisedRegistrationFieldValue($fieldName)
+    {
+        if (!$this->getRegistrationProgress()) {
+            return null;
+        }
+
+        $progresses = $this
+            ->getRegistrationProgress()
+            ->getStepProgresses();
+
+        /** @var $progress StepProgress */
+        foreach ($progresses as $progress) {
+            $value = $progress->getFieldValueByName($fieldName);
+
+            if ($value) {
+                return $value->getValue();
+            }
+        }
+
+        return null;
+    }
 }
