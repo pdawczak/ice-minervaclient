@@ -23,6 +23,20 @@ class AcademicInformation
     /**
      * @var string
      * @JMS\Type("string")
+     * @JMS\SerializedName("enrolmentStatusCode")
+     */
+    private $enrolmentStatusCode;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     * @JMS\SerializedName("bursaryStatusCode")
+     */
+    private $bursaryStatusCode;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
      * @JMS\SerializedName("registrationStatusCode")
      */
     private $registrationStatusCode;
@@ -288,5 +302,138 @@ class AcademicInformation
             }
         }
         return $this->course;
+    }
+
+    /**
+     * @param string $bursaryStatusCode
+     * @return AcademicInformation
+     */
+    public function setBursaryStatusCode($bursaryStatusCode)
+    {
+        $this->bursaryStatusCode = $bursaryStatusCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBursaryStatusCode()
+    {
+        return $this->bursaryStatusCode;
+    }
+
+    /**
+     * @param string $enrolmentStatusCode
+     * @return AcademicInformation
+     */
+    public function setEnrolmentStatusCode($enrolmentStatusCode)
+    {
+        $this->enrolmentStatusCode = $enrolmentStatusCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnrolmentStatusCode()
+    {
+        return $this->enrolmentStatusCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnrolmentReadyToEnrol()
+    {
+        return $this->getEnrolmentStatusCode() === MinervaStatus::EnrolmentReadyToEnrol;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnrolmentEnrolled()
+    {
+        return $this->getEnrolmentStatusCode() === MinervaStatus::EnrolmentEnrolled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnrolmentFailed()
+    {
+        return $this->getEnrolmentStatusCode() === MinervaStatus::EnrolmentFailed;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEnrolmentStatus()
+    {
+        return $this->getEnrolmentStatusCode() !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBursaryAwarded()
+    {
+        return $this->getBursaryStatusCode() === MinervaStatus::BursaryAwarded;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBursaryDeclined()
+    {
+        return $this->getBursaryStatusCode() === MinervaStatus::BursaryDeclined;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBursaryRejected()
+    {
+        return $this->getBursaryStatusCode() === MinervaStatus::BursaryRejected;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBursaryLapsed()
+    {
+        return $this->getBursaryStatusCode() === MinervaStatus::BursaryLapsed;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBursaryPending()
+    {
+        return $this->getBursaryStatusCode() === MinervaStatus::BursaryChecked ||
+            $this->getBursaryStatusCode() === MinervaStatus::BursaryReceived;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBursaryStatus()
+    {
+        return $this->getBursaryStatusCode() !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPaymentStatus()
+    {
+        return $this->getPaymentStatusCode() !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasApplicationStatus()
+    {
+        return $this->getApplicationStatusCode() !== null;
     }
 }

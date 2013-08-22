@@ -38,4 +38,5 @@ class MinervaStatus
     const PaymentOverpaid = 'PAYMENT_OVERPAID';
     const EnrolmentReadyToEnrol = 'ENROLMENT_READY';
     const EnrolmentEnrolled = 'ENROLMENT_ENROLLED';
+    const EnrolmentFailed = 'ENROLMENT_FAILED';
 }
