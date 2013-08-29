@@ -1,6 +1,7 @@
 <?php
 namespace Ice\MinervaClientBundle\Entity;
 
+use Ice\MinervaClientBundle\Exception\NotFoundException;
 use Ice\VeritasClientBundle\Entity\BookingItem as CourseBookingItem;
 use JMS\Serializer\Annotation as JMS;
 
@@ -307,13 +308,15 @@ class Booking
 
         /** @var $progress StepProgress */
         foreach ($progresses as $progress) {
-            $value = $progress->getFieldValueByName($fieldName);
-
-            if ($value) {
-                return $value->getValue();
+            try {
+                return $progress->getFieldValueByName($fieldName)->getValue();
+            } catch (NotFoundException $e) {
+                /*
+                 * FIXME: There's nothing to do in this catch block because this whole process is bad - we shouldn't be relying
+                 * on uniqueness of field names across the entire registration. This method should take a step name as well.
+                 */
             }
         }
-
         return null;
     }
 }
