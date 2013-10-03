@@ -495,6 +495,16 @@ class MinervaClient
         return $this->client->getCommand('CancelBooking', $values)->execute();
     }
 
+    public function bookingPaymentNull($username, $courseId)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+        );
+
+        return $this->client->getCommand('BookingPaymentNull', $values)->execute();
+    }
+
     public function bookingPaymentArranged($username, $courseId)
     {
         $values = array(

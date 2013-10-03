@@ -413,6 +413,21 @@
                 }
             }
         },
+        "BookingPaymentNull": {
+            "httpMethod": "POST",
+            "uri": "api/bookings/{username}/{courseId}/payment/null",
+            "summary": "Reset a booking's payment status",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "BookingPaymentArranged": {
             "httpMethod": "POST",
             "uri": "api/bookings/{username}/{courseId}/payment/arranged",

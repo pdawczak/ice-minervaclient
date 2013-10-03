@@ -2,6 +2,7 @@
 namespace Ice\MinervaClientBundle\EventListener;
 
 use Guzzle\Http\Exception\BadResponseException;
+use Ice\MercuryBundle\Event\DeleteOrderEvent;
 use Ice\MercuryBundle\Event\OrderEvent;
 use Ice\MercuryBundle\Event\PaymentGroupEvent;
 use Ice\MinervaClientBundle\Service\MinervaClient;
@@ -90,6 +91,23 @@ class MercuryListener implements EventSubscriberInterface
     }
 
     /**
+     * Fired just before the deletion of an order is flushed
+     *
+     * @param DeleteOrderEvent $event
+     */
+    public function onDeleteOrder(DeleteOrderEvent $event)
+    {
+        $network = $event->getOrderNetwork();
+        foreach ($network->getPaymentGroupsInNetwork() as $paymentGroup) {
+
+            $username = $paymentGroup->getAttributeByName('delegate_ice_id')->getValue();
+            $courseId = $paymentGroup->getAttributeByName('course_id')->getValue();
+
+            $this->minervaClient->bookingPaymentNull($username, $courseId);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public static function getSubscribedEvents()
@@ -97,6 +115,7 @@ class MercuryListener implements EventSubscriberInterface
         return array(
             'mercury.post_group_balance_change' => 'onGroupBalanceChange',
             'mercury.post_create_order' => 'onCreateOrder',
+            'mercury.delete_order' => 'onDeleteOrder',
         );
     }
 }
