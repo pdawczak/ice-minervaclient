@@ -495,6 +495,13 @@ class MinervaClient
         return $this->client->getCommand('CancelBooking', $values)->execute();
     }
 
+    /**
+     * @deprecated See setPaymentGroupPaymentStatusByReference
+     *
+     * @param $username
+     * @param $courseId
+     * @return mixed
+     */
     public function bookingPaymentNull($username, $courseId)
     {
         $values = array(
@@ -505,6 +512,13 @@ class MinervaClient
         return $this->client->getCommand('BookingPaymentNull', $values)->execute();
     }
 
+    /**
+     * @deprecated See setPaymentGroupPaymentStatusByReference
+     *
+     * @param $username
+     * @param $courseId
+     * @return mixed
+     */
     public function bookingPaymentArranged($username, $courseId)
     {
         $values = array(
@@ -515,6 +529,13 @@ class MinervaClient
         return $this->client->getCommand('BookingPaymentArranged', $values)->execute();
     }
 
+    /**
+     * @deprecated See setPaymentGroupPaymentStatusByReference
+     *
+     * @param $username
+     * @param $courseId
+     * @return mixed
+     */
     public function bookingPaymentCommitted($username, $courseId)
     {
         $values = array(
@@ -525,6 +546,13 @@ class MinervaClient
         return $this->client->getCommand('BookingPaymentCommitted', $values)->execute();
     }
 
+    /**
+     * @deprecated See setPaymentGroupPaymentStatusByReference
+     *
+     * @param $username
+     * @param $courseId
+     * @return mixed
+     */
     public function bookingPaymentPart($username, $courseId)
     {
         $values = array(
@@ -535,6 +563,13 @@ class MinervaClient
         return $this->client->getCommand('BookingPaymentPart', $values)->execute();
     }
 
+    /**
+     * @deprecated See setPaymentGroupPaymentStatusByReference
+     *
+     * @param $username
+     * @param $courseId
+     * @return mixed
+     */
     public function bookingPaymentBalanced($username, $courseId)
     {
         $values = array(
@@ -545,6 +580,13 @@ class MinervaClient
         return $this->client->getCommand('BookingPaymentBalanced', $values)->execute();
     }
 
+    /**
+     * @deprecated See setPaymentGroupPaymentStatusByReference
+     *
+     * @param $username
+     * @param $courseId
+     * @return mixed
+     */
     public function bookingPaymentOverpaid($username, $courseId)
     {
         $values = array(
@@ -553,6 +595,16 @@ class MinervaClient
         );
 
         return $this->client->getCommand('BookingPaymentOverpaid', $values)->execute();
+    }
+
+    public function setPaymentGroupPaymentStatusByReference($reference, $status)
+    {
+        $values = array(
+            'reference' => $reference,
+            'status' =>$status
+        );
+
+        return $this->client->getCommand('SetPaymentGroupPaymentStatusByReference', $values)->execute();
     }
 
     /**

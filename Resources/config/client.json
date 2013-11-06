@@ -503,6 +503,22 @@
                 }
             }
         },
+        "SetPaymentGroupPaymentStatusByReference": {
+            "httpMethod": "PUT",
+            "uri": "api/paymentgroups/by/reference/{reference}/status",
+            "summary": "Set payment status for a payment group",
+            "parameters": {
+                "reference": {
+                    "location": "uri",
+                    "required": true
+                },
+                "status": {
+                    "location": "body",
+                    "required": true,
+                    "filters": ["json_encode"]
+                }
+            }
+        },
         "SetBookingOrderReference": {
             "httpMethod": "PUT",
             "uri": "api/bookings/{username}/{courseId}/order-reference/{reference}",
