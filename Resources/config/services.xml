@@ -10,6 +10,8 @@
                 class="Ice\MinervaClientBundle\EventListener\MercuryListener">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="minerva.client" />
+            <argument type="service" id="logger" />
+            <tag name="monolog.logger" channel="minervaclient" />
         </service>
 
         <service
