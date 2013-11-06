@@ -516,6 +516,11 @@
                     "location": "body",
                     "required": true,
                     "filters": ["json_encode"]
+                },
+                "Content-type": {
+                    "location": "header",
+                    "required": true,
+                    "default": "application/json"
                 }
             }
         },

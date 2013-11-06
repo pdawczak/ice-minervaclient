@@ -34,5 +34,6 @@ class MinervaClientTest extends GuzzleTestCase
         $command->prepare();
 
         $this->assertEquals('"NewStatus"', $command->getRequest()->getBody()->__toString());
+        $this->assertEquals('application/json', $command->getRequest()->getHeader('Content-type'));
     }
 }
