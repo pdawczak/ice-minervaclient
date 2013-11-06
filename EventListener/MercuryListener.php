@@ -5,6 +5,7 @@ use Guzzle\Http\Exception\BadResponseException;
 use Ice\MercuryBundle\Event\DeleteOrderEvent;
 use Ice\MercuryBundle\Event\OrderEvent;
 use Ice\MercuryBundle\Event\PaymentGroupEvent;
+use Ice\MinervaClientBundle\Entity\MinervaStatus;
 use Ice\MinervaClientBundle\Service\MinervaClient;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -39,18 +40,15 @@ class MercuryListener implements EventSubscriberInterface
     {
         $group = $event->getPaymentGroup();
 
-        $username = $group->getAttributeByName('delegate_ice_id')->getValue();
-        $courseId = $group->getAttributeByName('course_id')->getValue();
-
         if (0 === $group->getNetAmountUnallocated()) {
-            $this->minervaClient->bookingPaymentBalanced($username, $courseId);
+            $this->minervaClient->setPaymentGroupPaymentStatusByReference($group->getExternalId(), MinervaStatus::PaymentBalanced);
         } elseif (
             $group->getNetAmountAllocated() > 0 &&
             $group->getNetAmountAllocated() < $group->getNetAmount()
         ) {
-            $this->minervaClient->bookingPaymentPart($username, $courseId);
+            $this->minervaClient->setPaymentGroupPaymentStatusByReference($group->getExternalId(), MinervaStatus::PaymentPartPaid);
         } elseif ($group->getNetAmountUnallocated() < 0) {
-            $this->minervaClient->bookingPaymentOverpaid($username, $courseId);
+            $this->minervaClient->setPaymentGroupPaymentStatusByReference($group->getExternalId(), MinervaStatus::PaymentOverpaid);
         }
     }
 
@@ -83,9 +81,9 @@ class MercuryListener implements EventSubscriberInterface
             // It is assumed that invoices and student loans (and others, see WPMR-236) will be paid so a place is allocated.
             // Other payment methods will be held for the appropriate amount of time and lost, unless payment is received.
             if (in_array($paymentMethod, array('INVOICE', 'STUDENT_LOAN', 'CHEQUE', 'BACS', 'PDQ'))) {
-                $this->minervaClient->bookingPaymentCommitted($username, $courseId);
+                $this->minervaClient->setPaymentGroupPaymentStatusByReference($group->getExternalId(), MinervaStatus::PaymentCommitted);
             } else {
-                $this->minervaClient->bookingPaymentArranged($username, $courseId);
+                $this->minervaClient->setPaymentGroupPaymentStatusByReference($group->getExternalId(), MinervaStatus::PaymentArranged);
             }
         }
     }
@@ -99,11 +97,7 @@ class MercuryListener implements EventSubscriberInterface
     {
         $network = $event->getOrderNetwork();
         foreach ($network->getPaymentGroupsInNetwork() as $paymentGroup) {
-
-            $username = $paymentGroup->getAttributeByName('delegate_ice_id')->getValue();
-            $courseId = $paymentGroup->getAttributeByName('course_id')->getValue();
-
-            $this->minervaClient->bookingPaymentNull($username, $courseId);
+            $this->minervaClient->setPaymentGroupPaymentStatusByReference($paymentGroup->getExternalId(), null);
         }
     }
 

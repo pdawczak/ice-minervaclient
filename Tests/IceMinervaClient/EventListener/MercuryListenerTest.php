@@ -10,15 +10,16 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @group mercury
      */
-    public function testPaymentMethodInvoiceNoPaymentIsStatusArranged()
+    public function testPaymentMethodOnlineNoPaymentIsStatusArranged()
     {
         $client = $this->getMinervaClient();
         $client
-            ->expects($this->once())
-            ->method('bookingPaymentArranged')
+            ->expects($this->atLeastOnce())
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->with('IB-123', 'PAYMENT_ARRANGED')
         ;
 
-        $event = $this->getOrderEvent($this->getOrder('INVOICE'));
+        $event = $this->getOrderEvent($this->getOrder('ONLINE'));
 
         $listener = new MercuryListener($client);
         $listener->onCreateOrder($event);
@@ -31,8 +32,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getMinervaClient();
         $client
-            ->expects($this->once())
-            ->method('bookingPaymentCommitted')
+            ->expects($this->atLeastOnce())
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->with('IB-123', 'PAYMENT_COMMITTED')
         ;
 
         $event = $this->getOrderEvent($this->getOrder('INVOICE'));
@@ -44,12 +46,13 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @group mercury
      */
-    public function testPaymentMethodStudentLoanNoPaymentIsStatusArranged()
+    public function testPaymentMethodStudentLoanNoPaymentIsStatusCommitted()
     {
         $client = $this->getMinervaClient();
         $client
-            ->expects($this->once())
-            ->method('bookingPaymentArranged')
+            ->expects($this->atLeastOnce())
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->with('IB-123', 'PAYMENT_COMMITTED')
         ;
 
         $event = $this->getOrderEvent($this->getOrder('STUDENT_LOAN'));
@@ -80,6 +83,11 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('bookingPaymentArranged')
         ;
+        $client
+            ->expects($this->never())
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->withAnyParameters()
+        ;
 
         $paymentGroup = $this->getPaymentGroup();
         $paymentGroup
@@ -102,7 +110,8 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMinervaClient();
         $client
             ->expects($this->once())
-            ->method('bookingPaymentPart')
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->with('IB-123', 'PAYMENT_PART_PAID')
         ;
 
         $paymentGroup = $this->getPaymentGroup('PDQ');
@@ -131,7 +140,8 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMinervaClient();
         $client
             ->expects($this->once())
-            ->method('bookingPaymentBalanced')
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->with('IB-123', 'PAYMENT_BALANCED')
         ;
 
         $paymentGroup = $this->getPaymentGroup('CHEQUE');
@@ -155,7 +165,8 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMinervaClient();
         $client
             ->expects($this->once())
-            ->method('bookingPaymentOverpaid')
+            ->method('setPaymentGroupPaymentStatusByReference')
+            ->with('IB-123', 'PAYMENT_OVERPAID')
         ;
 
         $paymentGroup = $this->getPaymentGroup('BACS');
@@ -217,13 +228,19 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValueMap($this->getAttributeValueMap($paymentType)))
         ;
 
+        $paymentGroup
+            ->expects($this->any())
+            ->method('getExternalId')
+            ->will($this->returnValue('IB-123'))
+        ;
+
         return $paymentGroup;
     }
 
     private function getOrder($secondPaymentType)
     {
         $suborder1 = new Suborder();
-        $suborder1->setPaymentGroup($this->getPaymentGroup());
+        $suborder1->setPaymentGroup($this->getPaymentGroup($secondPaymentType));
         $suborder2 = new Suborder();
         $suborder2->setPaymentGroup($this->getPaymentGroup($secondPaymentType));
 
