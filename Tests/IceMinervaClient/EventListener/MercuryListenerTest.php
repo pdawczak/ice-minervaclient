@@ -7,6 +7,9 @@ use Ice\MinervaClientBundle\EventListener\MercuryListener;
 
 class MercuryListenerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodInvoiceNoPaymentIsStatusArranged()
     {
         $client = $this->getMinervaClient();
@@ -21,6 +24,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onCreateOrder($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodInvoiceNoPaymentIsStatusCommitted()
     {
         $client = $this->getMinervaClient();
@@ -35,6 +41,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onCreateOrder($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodStudentLoanNoPaymentIsStatusArranged()
     {
         $client = $this->getMinervaClient();
@@ -49,6 +58,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onCreateOrder($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodPdqNoPaymentIsNoOp()
     {
         $client = $this->getMinervaClient();
@@ -82,6 +94,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onGroupBalanceChange($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodPdqWithPaymentIsPartPaid()
     {
         $client = $this->getMinervaClient();
@@ -108,6 +123,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onGroupBalanceChange($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodChequeFullyPaidIsBalanced()
     {
         $client = $this->getMinervaClient();
@@ -129,6 +147,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onGroupBalanceChange($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testPaymentMethodBacsOverpaidIsOverpaid()
     {
         $client = $this->getMinervaClient();
@@ -150,6 +171,9 @@ class MercuryListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onGroupBalanceChange($event);
     }
 
+    /**
+     * @group mercury
+     */
     public function testBookingOrderReferenceSetWhenOrderCreated()
     {
         $client = $this->getMinervaClient();
