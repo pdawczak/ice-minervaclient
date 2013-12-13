@@ -152,6 +152,6 @@ class MercuryListener implements EventSubscriberInterface
             $context['response'] = $e->getResponse()->__toString();
         }
 
-        $this->logger->err("Exception encountered when trying to ".$intention, $context);
+        $this->logger->error("Exception encountered when trying to ".$intention, $context);
     }
 }
