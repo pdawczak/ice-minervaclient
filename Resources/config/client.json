@@ -514,7 +514,7 @@
                 },
                 "status": {
                     "location": "body",
-                    "required": true,
+                    "required": false,
                     "filters": ["json_encode"]
                 },
                 "Content-type": {
