@@ -350,7 +350,6 @@ class MinervaClient
 
     /**
      * @param $iceId
-     * @param $courseId
      * @return AcademicInformation
      * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
      * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
