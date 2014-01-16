@@ -350,20 +350,43 @@ class MinervaClient
 
     /**
      * @param $iceId
-     * @return AcademicInformation
+     * @return AcademicInformation[]
      * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
      * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
      */
     public function getAllAcademicInformationByIceId($iceId){
         try{
-            $academicInformation = $this->client->getCommand('GetAllAcademicInformation', array(
+            $academicInformation = $this->client->getCommand('GetAllAcademicInformationByPerson', array(
                 'username'=>$iceId
             ))->execute();
             return $academicInformation;
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $e){
             if($e->getResponse()->getStatusCode()===404){
-                throw new NotFoundException("Academic information not found for this person and course", 404, $e);
+                throw new NotFoundException("Academic information not found for this person", 404, $e);
+            }
+            else{
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @param $courseId
+     * @return AcademicInformation[]
+     * @throws \Exception|\Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws \Ice\MinervaClientBundle\Exception\NotFoundException
+     */
+    public function getAllAcademicInformationByCourseId($courseId){
+        try{
+            $academicInformation = $this->client->getCommand('GetAllAcademicInformationByCourse', array(
+                'courseId'=>$courseId
+            ))->execute();
+            return $academicInformation;
+        }
+        catch(\Guzzle\Http\Exception\ClientErrorResponseException $e){
+            if($e->getResponse()->getStatusCode()===404){
+                throw new NotFoundException("Academic information not found for this person", 404, $e);
             }
             else{
                 throw $e;
