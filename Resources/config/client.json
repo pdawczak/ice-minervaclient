@@ -181,6 +181,10 @@
                     "location": "json",
                     "required": true
                 },
+                "stepVersion": {
+                    "location": "json",
+                    "required": false
+                },
                 "description": {
                     "location": "json",
                     "required": true

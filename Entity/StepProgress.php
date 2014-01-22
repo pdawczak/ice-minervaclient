@@ -20,6 +20,13 @@ class StepProgress
     private $stepName;
 
     /**
+     * @var int
+     * @JMS\Type("integer")
+     * @JMS\SerializedName("stepVersion")
+     */
+    private $stepVersion;
+
+    /**
      * @var string
      * @JMS\Type("string")
      */
@@ -240,5 +247,23 @@ class StepProgress
             $this->fieldValues[] = $fieldValue;
         }
         return $this;
+    }
+
+    /**
+     * @param int $stepVersion
+     * @return StepProgress
+     */
+    public function setStepVersion($stepVersion)
+    {
+        $this->stepVersion = $stepVersion;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStepVersion()
+    {
+        return $this->stepVersion;
     }
 }
