@@ -13,6 +13,18 @@ class StepProgress
     private $registrationProgress;
 
     /**
+     * @var int
+     * @JMS\Type("integer")
+     */
+    private $id;
+
+    /**
+     * @var int
+     * @JMS\Type("integer")
+     */
+    private $registrationProgressId;
+
+    /**
      * @var string
      * @JMS\Type("string")
      * @JMS\SerializedName("stepName")
@@ -265,5 +277,41 @@ class StepProgress
     public function getStepVersion()
     {
         return $this->stepVersion;
+    }
+
+    /**
+     * @param int $id
+     * @return StepProgress
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $registrationProgressId
+     * @return StepProgress
+     */
+    public function setRegistrationProgressId($registrationProgressId)
+    {
+        $this->registrationProgressId = $registrationProgressId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRegistrationProgressId()
+    {
+        return $this->registrationProgressId;
     }
 }
