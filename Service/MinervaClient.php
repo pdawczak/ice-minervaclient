@@ -7,6 +7,8 @@ use Guzzle\Service\Client;
 
 use Ice\MinervaClientBundle\Entity\AcademicInformation;
 use Ice\MinervaClientBundle\Entity\BookingItemSummary;
+use Ice\MinervaClientBundle\Entity\CourseApplication;
+use Ice\MinervaClientBundle\Entity\CourseApplicationStep;
 use Ice\MinervaClientBundle\Entity\MinervaStatus;
 use Ice\MinervaClientBundle\Exception\ClientErrorResponseException;
 use Ice\MinervaClientBundle\Exception\NotFoundException;
@@ -659,5 +661,46 @@ class MinervaClient
         );
 
         return $this->client->getCommand('SetBookingOrderReference', $values)->execute();
+    }
+
+    public function beginCourseApplication($username, $courseId, CourseApplication $courseApplication)
+    {
+        $values = array(
+            'username' => $username,
+            'courseId' => $courseId,
+            'courseApplicationSteps' => []
+        );
+
+        foreach ($courseApplication->getCourseApplicationSteps() as $step) {
+            $values['courseApplicationSteps'][] = [
+                'stepName' => $step->getStepName(),
+                'stepVersion' => $step->getStepVersion(),
+                'description' => $step->getDescription(),
+                'order' => $step->getOrder()
+            ];
+        }
+
+        return $this->client->getCommand('PostCourseApplication', $values)->execute();
+    }
+
+    public function updateCourseApplicationStep($applicationId, CourseApplicationStep $courseApplicationStep)
+    {
+        $values = array(
+            'id' => $applicationId,
+            'complete' => $courseApplicationStep->isComplete(),
+            'stepName' => $courseApplicationStep->getStepName(),
+            'courseApplicationFieldValues' => []
+        );
+
+        foreach ($courseApplicationStep->getFieldValues() as $value) {
+            $values['courseApplicationFieldValues'][] = [
+                'fieldName' => $value->getFieldName(),
+                'description' => $value->getDescription(),
+                'value' => $value->getValueSerialized(),
+                'order' => $value->getOrder()
+            ];
+        }
+
+        return $this->client->getCommand('UpdateCourseApplicationStep', $values)->execute();
     }
 }

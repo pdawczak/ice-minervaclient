@@ -42,6 +42,11 @@ class CourseApplication
      */
     private $courseApplicationSteps;
 
+    public function __construct()
+    {
+        $this->courseApplicationSteps = [];
+    }
+
     /**
      * @param \Ice\MinervaClientBundle\Entity\AcademicInformation|null $academicInformation
      * @return CourseApplication

@@ -20,7 +20,90 @@
                 }
             }
         },
-
+        "PostCourseApplication": {
+            "httpMethod": "POST",
+            "uri": "api/academicinformation/{username}/{courseId}/courseapplications",
+            "summary": "Create a new course application against an academic information",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\CourseApplication",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseId": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseApplicationSteps": {
+                    "location": "json",
+                    "type": "array",
+                    "additionalProperties": {
+                        "stepName": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "stepVersion": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "order": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        },
+                        "description": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            }
+        },
+        "UpdateCourseApplicationStep": {
+            "httpMethod": "PATCH",
+            "uri": "api/courseapplications/{id}/steps/{stepName}",
+            "summary": "Update a course application step",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\CourseApplication",
+            "parameters": {
+                "id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "stepName": {
+                    "location": "uri",
+                    "required": true
+                },
+                "courseApplicationFieldValues": {
+                    "location": "json",
+                    "type": "array",
+                    "additionalProperties": {
+                        "fieldName": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "value": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        },
+                        "order": {
+                            "location": "json",
+                            "type": "integer",
+                            "required": true
+                        },
+                        "description": {
+                            "location": "json",
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            }
+        },
         "SetBursaryStatus": {
             "httpMethod": "PUT",
             "uri": "api/academicinformation/{username}/{courseId}/statuses/bursary",

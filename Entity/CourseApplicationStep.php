@@ -20,6 +20,13 @@ class CourseApplicationStep
     private $stepVersion;
 
     /**
+     * @var string
+     * @JMS\Type("string")
+     * @JMS\SerializedName("description")
+     */
+    private $description;
+
+    /**
      * @var int
      * @JMS\Type("integer")
      */
@@ -175,5 +182,31 @@ class CourseApplicationStep
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * @param string $description
+     * @return CourseApplicationStep
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isComplete()
+    {
+        return $this->completed !== null;
     }
 }
