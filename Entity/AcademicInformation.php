@@ -21,6 +21,13 @@ class AcademicInformation
     private $bookings;
 
     /**
+     * @var CourseApplication[]|ArrayCollection;
+     * @JMS\Type("array<Ice\MinervaClientBundle\Entity\CourseApplication>")
+     * @JMS\SerializedName("courseApplications")
+     */
+    private $courseApplications;
+
+    /**
      * @var string
      * @JMS\Type("string")
      * @JMS\SerializedName("enrolmentStatusCode")
@@ -94,6 +101,27 @@ class AcademicInformation
             $booking->setAcademicInformation($this);
         }
         return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection|\Ice\MinervaClientBundle\Entity\CourseApplication[] $courseApplications
+     * @return AcademicInformation
+     */
+    public function setCourseApplications($courseApplications)
+    {
+        $this->courseApplications = $courseApplications;
+        foreach ($this->courseApplications as $courseApplication) {
+            $courseApplication->setAcademicInformation($this);
+        }
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|\Ice\MinervaClientBundle\Entity\CourseApplication[]
+     */
+    public function getCourseApplications()
+    {
+        return $this->courseApplications;
     }
 
     /**
