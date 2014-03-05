@@ -663,6 +663,17 @@ class MinervaClient
         return $this->client->getCommand('SetBookingOrderReference', $values)->execute();
     }
 
+    /**
+     * Create a new course application against an academic information specified by the username and course ID.
+     * If the academic information does not exist, it will be created in the same transaction.
+     *
+     * All steps which will form part of the application should be specified on the CourseApplication object.
+     *
+     * @param $username
+     * @param $courseId
+     * @param CourseApplication $courseApplication
+     * @return mixed
+     */
     public function beginCourseApplication($username, $courseId, CourseApplication $courseApplication)
     {
         $values = array(
@@ -683,6 +694,14 @@ class MinervaClient
         return $this->client->getCommand('PostCourseApplication', $values)->execute();
     }
 
+    /**
+     * Replace the collection of field values with those specified by the given CourseApplicationStep, and set the
+     * remote step to complete based on whether the completion date is set on the passed entity.
+     *
+     * @param $applicationId
+     * @param CourseApplicationStep $courseApplicationStep
+     * @return mixed
+     */
     public function updateCourseApplicationStep($applicationId, CourseApplicationStep $courseApplicationStep)
     {
         $values = array(
