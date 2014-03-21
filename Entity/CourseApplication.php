@@ -154,4 +154,18 @@ class CourseApplication
     {
         return $this->courseApplicationSteps;
     }
+
+    /**
+     * @param $name
+     * @return CourseApplicationStep|null
+     */
+    public function getCourseApplicationStepByName($name)
+    {
+        foreach ($this->getCourseApplicationSteps() as $step) {
+            if($step->getStepName() === $name) {
+                return $step;
+            }
+        }
+        return null;
+    }
 }
