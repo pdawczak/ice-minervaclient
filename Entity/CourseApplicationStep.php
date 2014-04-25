@@ -56,7 +56,7 @@ class CourseApplicationStep
      * @JMS\AccessType("public_method")
      * @JMS\SerializedName("fieldValues")
      */
-    private $fieldValues;
+    private $fieldValues = array();
 
     /**
      * @param \DateTime|null $began
