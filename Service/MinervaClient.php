@@ -683,11 +683,23 @@ class MinervaClient
         );
 
         foreach ($courseApplication->getCourseApplicationSteps() as $step) {
+            $fieldValues = [];
+
+            foreach ($step->getFieldValues() as $fieldValue) {
+                $fieldValues[] = [
+                    'fieldName' => $fieldValue->getFieldName(),
+                    'description' => $fieldValue->getDescription(),
+                    'value' => $fieldValue->getValueSerialized(),
+                    'order' => $fieldValue->getOrder()
+                ];
+            }
+
             $values['courseApplicationSteps'][] = [
                 'stepName' => $step->getStepName(),
                 'stepVersion' => $step->getStepVersion(),
                 'description' => $step->getDescription(),
-                'order' => $step->getOrder()
+                'order' => $step->getOrder(),
+                'courseApplicationFieldValues' => $fieldValues
             ];
         }
 
@@ -721,5 +733,19 @@ class MinervaClient
         }
 
         return $this->client->getCommand('UpdateCourseApplicationStep', $values)->execute();
+    }
+
+    /**
+     * Get a course application by its ID
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getCourseApplication($id)
+    {
+        $values = array(
+            'id' => $id
+        );
+        return $this->client->getCommand('GetCourseApplication', $values)->execute();
     }
 }

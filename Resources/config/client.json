@@ -20,6 +20,18 @@
                 }
             }
         },
+        "GetCourseApplication": {
+            "httpMethod": "GET",
+            "uri": "api/courseapplications/{id}",
+            "summary": "Get a course application by its ID",
+            "responseClass": "Ice\\MinervaClientBundle\\Entity\\CourseApplication",
+            "parameters": {
+                "id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "PostCourseApplication": {
             "httpMethod": "POST",
             "uri": "api/academicinformation/{username}/{courseId}/courseapplications",
@@ -57,6 +69,32 @@
                             "location": "json",
                             "type": "string",
                             "required": true
+                        },
+                        "courseApplicationFieldValues": {
+                            "location": "json",
+                            "type": "array",
+                            "additionalProperties": {
+                                "fieldName": {
+                                    "location": "json",
+                                    "type": "string",
+                                    "required": true
+                                },
+                                "value": {
+                                    "location": "json",
+                                    "type": "string",
+                                    "required": true
+                                },
+                                "order": {
+                                    "location": "json",
+                                    "type": "integer",
+                                    "required": true
+                                },
+                                "description": {
+                                    "location": "json",
+                                    "type": "string",
+                                    "required": true
+                                }
+                            }
                         }
                     }
                 }
