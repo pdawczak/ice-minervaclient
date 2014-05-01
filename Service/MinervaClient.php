@@ -696,6 +696,7 @@ class MinervaClient
 
             $values['courseApplicationSteps'][] = [
                 'stepName' => $step->getStepName(),
+                'complete' => $step->isComplete(),
                 'stepVersion' => $step->getStepVersion(),
                 'description' => $step->getDescription(),
                 'order' => $step->getOrder(),
