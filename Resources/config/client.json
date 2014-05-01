@@ -114,6 +114,9 @@
                     "location": "uri",
                     "required": true
                 },
+                "complete": {
+                    "location": "json"
+                },
                 "courseApplicationFieldValues": {
                     "location": "json",
                     "type": "array",
