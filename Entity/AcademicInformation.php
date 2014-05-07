@@ -221,6 +221,16 @@ class AcademicInformation
     }
 
     /**
+     * Return true if the course application has in progress status, false otherwise
+     *
+     * @return bool
+     */
+    public function isApplicationInProgress()
+    {
+        return $this->getApplicationStatusCode() === MinervaStatus::ApplicationInProgress;
+    }
+
+    /**
      * Return true if the course application has rejected status, false otherwise
      *
      * @return bool
@@ -261,6 +271,7 @@ class AcademicInformation
             !$this->isApplicationAccepted() &&
             !$this->isApplicationRejected() &&
             !$this->isApplicationLapsed() &&
+            !$this->isApplicationInProgress() &&
             !$this->isApplicationWithdrawn();
     }
 

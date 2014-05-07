@@ -7,6 +7,7 @@ class MinervaStatus
     const ApplicationAccepted = 'APPLICATION_ACCEPTED';
     const ApplicationApprovedByAcademic = 'APPLICATION_APPROVED_BY_ACADEMIC';
     const ApplicationChecked = 'APPLICATION_CHECKED';
+    const ApplicationInProgress = 'APPLICATION_IN_PROGRESS';
     const ApplicationLapsed = 'APPLICATION_LAPSED';
     const ApplicationReceived = 'APPLICATION_RECEIVED';
     const ApplicationRejected = 'APPLICATION_REJECTED';
