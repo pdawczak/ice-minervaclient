@@ -13,7 +13,7 @@
         >
     <testsuites>
         <testsuite name="Ice Minerva Client Test Suite">
-            <directory>./Tests/</directory>
+            <directory>./src/Ice/MinervaClientBundle/Tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -21,7 +21,7 @@
         <whitelist>
             <directory>./</directory>
             <exclude>
-                <directory>./Tests</directory>
+                <directory>./src/Ice/MinervaClientBundle/Tests</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
