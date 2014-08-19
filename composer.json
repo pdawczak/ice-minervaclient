@@ -27,6 +27,5 @@
         "psr-0": {
             "": "src"
         }
-    },
-    "target-dir": "Ice/MinervaClientBundle"
+    }
 }
