@@ -1,0 +1,28 @@
+Ice\MinervaClientBundle\Entity\BookingItem:
+  type: entity
+  table: minervaclient_bookingitem
+  id:
+    code:
+      type: string
+    booking:
+      associationKey: true
+  fields:
+    statusCode:
+      type: string
+      nullable: true
+    description:
+      type: string
+      nullable: true
+    price:
+      type: integer
+      nullable: true
+  manyToOne:
+    booking:
+      targetEntity: Booking
+      inversedBy: bookingItems
+    category:
+      targetEntity: Category
+      joinColumn:
+        name: category_id
+        referencedColumnName: id
+        nullable: false

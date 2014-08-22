@@ -1,0 +1,9 @@
+Ice\MinervaClientBundle\Entity\Category:
+  type: entity
+  table: minervaclient_category
+  id:
+    id:
+      type: integer
+  fields:
+    description:
+      type: string

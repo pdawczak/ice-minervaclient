@@ -1,0 +1,28 @@
+Ice\MinervaClientBundle\Entity\AcademicInformation:
+  type: entity
+  table: minervaclient_academicinformation
+  id:
+    iceId:
+      type: string
+    courseId:
+      type: integer
+  fields:
+    registrationStatusCode:
+      type: string
+      nullable: true
+    enrolmentStatusCode:
+      type: string
+      nullable: true
+    bursaryStatusCode:
+      type: string
+      nullable: true
+    paymentStatusCode:
+      type: string
+      nullable: true
+    applicationStatusCode:
+      type: string
+      nullable: true
+  oneToMany:
+    bookings:
+      targetEntity: Booking
+      mappedBy: academicInformation

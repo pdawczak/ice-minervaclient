@@ -1,0 +1,33 @@
+Ice\MinervaClientBundle\Entity\Booking:
+  type: entity
+  table: minervaclient_booking
+  id:
+    id:
+      type: integer
+  fields:
+    paymentGroupId:
+      type: string
+      nullable: true
+    bookingDate:
+      type: datetime
+      nullable: true
+    cancelledDate:
+      type: datetime
+      nullable: true
+    bookedBy:
+      type: string
+      nullable: true
+    orderReference:
+      type: string
+      nullable: true
+  oneToMany:
+    bookingItems:
+      targetEntity: BookingItem
+      mappedBy: booking
+  manyToOne:
+    academicInformation:
+      targetEntity: AcademicInformation
+      inversedBy: bookings
+      joinColumns:
+        - { name: ai_ice_id, referencedColumnName: iceId }
+        - { name: ai_course_id, referencedColumnName: courseId}
