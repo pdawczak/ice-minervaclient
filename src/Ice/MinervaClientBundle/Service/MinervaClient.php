@@ -3,7 +3,7 @@
 namespace Ice\MinervaClientBundle\Service;
 
 use Guzzle\Http\Exception\BadResponseException;
-use Guzzle\Service\Client;
+use Guzzle\Service\ClientInterface;
 
 use Ice\MinervaClientBundle\Entity\AcademicInformation;
 use Ice\MinervaClientBundle\Entity\BookingItemSummary;
@@ -20,7 +20,7 @@ use JMS\Serializer\Serializer;
 class MinervaClient
 {
     /**
-     * @var \Guzzle\Service\Client
+     * @var \Guzzle\Service\ClientInterface
      */
     private $client;
 
@@ -30,12 +30,12 @@ class MinervaClient
     private $serializer;
 
     /**
-     * @param Client     $client
+     * @param ClientInterface     $client
      * @param Serializer $serializer
      * @param string     $username
      * @param string     $password
      */
-    public function __construct(Client $client, Serializer $serializer, $username, $password)
+    public function __construct(ClientInterface $client, Serializer $serializer, $username, $password)
     {
         $this->client = $client;
         $this->client->setConfig(array(
