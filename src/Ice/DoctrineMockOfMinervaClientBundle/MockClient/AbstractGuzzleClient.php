@@ -56,11 +56,12 @@ abstract class AbstractGuzzleClient implements ClientInterface
      * Create an OPTIONS request for the client
      *
      * @param string|array $uri Resource URI
+     * @param array        $options
      *
      * @return RequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function options($uri = null)
+    public function options($uri = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
@@ -222,12 +223,13 @@ abstract class AbstractGuzzleClient implements ClientInterface
      * @param string|array $uri     Resource URI.
      * @param array|Collection $headers HTTP headers
      * @param string|resource|array|EntityBodyInterface $body    Entity body of request (POST/PUT) or response (GET)
+     * @param array $options
      *
      * @return RequestInterface
      * @throws InvalidArgumentException if a URI array is passed that does not contain exactly two elements: the URI
      *                                  followed by template variables
      */
-    public function createRequest($method = RequestInterface::GET, $uri = null, $headers = null, $body = null)
+    public function createRequest($method = RequestInterface::GET, $uri = null, $headers = null, $body = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
@@ -265,11 +267,12 @@ abstract class AbstractGuzzleClient implements ClientInterface
      *
      * @param string|array $uri     Resource URI
      * @param array|Collection $headers HTTP headers
+     * @param array $options
      *
      * @return RequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function head($uri = null, $headers = null)
+    public function head($uri = null, $headers = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
@@ -280,11 +283,12 @@ abstract class AbstractGuzzleClient implements ClientInterface
      * @param string|array $uri     Resource URI
      * @param array|Collection $headers HTTP headers
      * @param string|resource|EntityBodyInterface $body    Body to send in the request
+     * @param array $options
      *
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function delete($uri = null, $headers = null, $body = null)
+    public function delete($uri = null, $headers = null, $body = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
@@ -295,11 +299,12 @@ abstract class AbstractGuzzleClient implements ClientInterface
      * @param string|array $uri     Resource URI
      * @param array|Collection $headers HTTP headers
      * @param string|resource|EntityBodyInterface $body    Body to send in the request
+     * @param array $options
      *
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function put($uri = null, $headers = null, $body = null)
+    public function put($uri = null, $headers = null, $body = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
@@ -313,10 +318,12 @@ abstract class AbstractGuzzleClient implements ClientInterface
      *                                                    associative array of POST fields to send in the body of the
      *                                                    request.  Prefix a value in the array with the @ symbol to
      *                                                    reference a file.
+     * @param array $options
+     *
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function post($uri = null, $headers = null, $postBody = null)
+    public function post($uri = null, $headers = null, $postBody = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
@@ -411,11 +418,12 @@ abstract class AbstractGuzzleClient implements ClientInterface
      * @param string|array $uri     Resource URI
      * @param array|Collection $headers HTTP headers
      * @param string|resource|EntityBodyInterface $body    Body to send in the request
+     * @param array $options
      *
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function patch($uri = null, $headers = null, $body = null)
+    public function patch($uri = null, $headers = null, $body = null, array $options = array())
     {
         throw new MethodNotImplementedException();
     }
