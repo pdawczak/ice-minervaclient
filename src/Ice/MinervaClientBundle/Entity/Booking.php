@@ -28,13 +28,6 @@ class Booking
     private $bookedBy;
 
     /**
-     * @var string
-     * @JMS\Type("string")
-     * @JMS\SerializedName("suborderGroup")
-     */
-    private $suborderGroup;
-
-    /**
      * @var \DateTime
      * @JMS\Type("DateTime")
      * @JMS\SerializedName("bookingDate")
@@ -190,15 +183,6 @@ class Booking
             $total += $item->getPrice();
         }
         return $total;
-    }
-
-    /**
-     * @return string
-     * @deprecated in favour of getPaymentGroupReference
-     */
-    public function getSuborderGroup()
-    {
-        return $this->suborderGroup;
     }
 
     /**
