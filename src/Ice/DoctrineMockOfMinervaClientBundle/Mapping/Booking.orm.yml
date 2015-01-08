@@ -5,7 +5,10 @@ Ice\MinervaClientBundle\Entity\Booking:
     id:
       type: integer
   fields:
-    paymentGroupId:
+    bookingReference:
+      type: string
+      nullable: true
+    paymentGroupReference:
       type: string
       nullable: true
     bookingDate:
