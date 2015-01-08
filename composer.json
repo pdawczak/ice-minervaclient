@@ -3,12 +3,6 @@
     "type": "symfony-bundle",
     "description": "Client for the ICE Minerva API",
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://satis.internal.admin.cam.ac.uk"
-        }
-    ],
     "authors": [
         {
             "name": "Rob Hogan",
