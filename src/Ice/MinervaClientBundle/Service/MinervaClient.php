@@ -449,7 +449,7 @@ class MinervaClient
             'bookedBy'=>$booking->getBookedBy(),
             'bookingDate'=>$booking->getBookingDate() ? $booking->getBookingDate()->format('c') : null,
             'orderReference'=>$booking->getOrderReference(),
-            'suborderGroup'=>$booking->getSuborderGroup(),
+            'reference'=>$booking->getBookingReference(),
             'bookingItems'=>[]
         );
 
