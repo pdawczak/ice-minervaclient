@@ -228,38 +228,6 @@ class Booking
     }
 
     /**
-     * Get the optional items which the user can't order. This is useful for feedback before asking them to revisit
-     * their course registration.
-     *
-     * @return BookingItem[]|array
-     * @throws \LogicException
-     * @throws \RuntimeException
-     */
-    public function getNonRequiredBookingItemsOutOfStock ()
-    {
-        if (
-            !$this->getAcademicInformation() ||
-            !($course = $this->getAcademicInformation()->getCourse())
-        ) {
-            throw new \LogicException("getItemsOutOfStock requires an attached AcademicInformation with an attached Course");
-        } else {
-            $items = [];
-            foreach ($this->getBookingItems() as $item) {
-                if ($courseItem = $course->getBookingItemByCode($item->getCode())) {
-                    if (!$courseItem->isInStock()) {
-                        $items[] = $item;
-                    }
-                } else {
-                    throw new \RuntimeException(
-                        'No course booking item found to match '.$item->getCode(). ' on booking '.$this->getId()
-                    );
-                }
-            }
-            return $items;
-        }
-    }
-
-    /**
      * @return \DateTime
      */
     public function getBookingDate()
