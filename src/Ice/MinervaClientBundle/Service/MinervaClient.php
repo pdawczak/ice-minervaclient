@@ -412,7 +412,7 @@ class MinervaClient
         ));
 
         try{
-            $this->client->getCommand('CreateBooking', $values)->execute();
+            $this->client->getCommand('PutBooking', $values)->execute();
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
             if($clientErrorResponseException->getCode()===400){
@@ -463,7 +463,7 @@ class MinervaClient
         }
 
         try{
-            $this->client->getCommand('CreateBooking', $values)->execute();
+            $this->client->getCommand('PutBooking', $values)->execute();
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
             if($clientErrorResponseException->getCode()===400){
