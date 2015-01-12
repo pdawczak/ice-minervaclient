@@ -477,7 +477,7 @@
                     "required":true,
                     "type":"string"
                 },
-                "suborderGroup": {
+                "reference": {
                     "location":"json",
                     "required":false,
                     "type":"string"
