@@ -412,7 +412,7 @@ class MinervaClient
         ));
 
         try{
-            $this->client->getCommand('CreateBooking', $values)->execute();
+            $this->client->getCommand('PutBooking', $values)->execute();
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
             if($clientErrorResponseException->getCode()===400){
@@ -449,7 +449,7 @@ class MinervaClient
             'bookedBy'=>$booking->getBookedBy(),
             'bookingDate'=>$booking->getBookingDate() ? $booking->getBookingDate()->format('c') : null,
             'orderReference'=>$booking->getOrderReference(),
-            'suborderGroup'=>$booking->getSuborderGroup(),
+            'reference'=>$booking->getBookingReference(),
             'bookingItems'=>[]
         );
 
@@ -463,7 +463,7 @@ class MinervaClient
         }
 
         try{
-            $this->client->getCommand('CreateBooking', $values)->execute();
+            $this->client->getCommand('PutBooking', $values)->execute();
         }
         catch(\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException){
             if($clientErrorResponseException->getCode()===400){

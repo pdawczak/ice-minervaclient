@@ -16,16 +16,16 @@ class Booking
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName("bookedBy")
+     * @JMS\SerializedName("reference")
      */
-    private $bookedBy;
+    private $bookingReference;
 
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName("suborderGroup")
+     * @JMS\SerializedName("bookedBy")
      */
-    private $suborderGroup;
+    private $bookedBy;
 
     /**
      * @var \DateTime
@@ -73,8 +73,9 @@ class Booking
     /**
      * @var string
      * @JMS\Type("string")
+     * @JMS\SerializedName("paymentGroupReference")
      */
-    private $paymentGroupId;
+    private $paymentGroupReference;
 
     /**
      * @return AcademicInformation
@@ -173,24 +174,6 @@ class Booking
     }
 
     /**
-     * @param string $paymentGroupId
-     * @return Booking
-     */
-    public function setPaymentGroupId($paymentGroupId)
-    {
-        $this->paymentGroupId = $paymentGroupId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPaymentGroupId()
-    {
-        return $this->paymentGroupId;
-    }
-
-    /**
      * @return int
      */
     public function getBookingTotalPriceInPence()
@@ -200,14 +183,6 @@ class Booking
             $total += $item->getPrice();
         }
         return $total;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSuborderGroup()
-    {
-        return $this->suborderGroup;
     }
 
     /**
@@ -253,38 +228,6 @@ class Booking
     }
 
     /**
-     * Get the optional items which the user can't order. This is useful for feedback before asking them to revisit
-     * their course registration.
-     *
-     * @return BookingItem[]|array
-     * @throws \LogicException
-     * @throws \RuntimeException
-     */
-    public function getNonRequiredBookingItemsOutOfStock ()
-    {
-        if (
-            !$this->getAcademicInformation() ||
-            !($course = $this->getAcademicInformation()->getCourse())
-        ) {
-            throw new \LogicException("getItemsOutOfStock requires an attached AcademicInformation with an attached Course");
-        } else {
-            $items = [];
-            foreach ($this->getBookingItems() as $item) {
-                if ($courseItem = $course->getBookingItemByCode($item->getCode())) {
-                    if (!$courseItem->isInStock()) {
-                        $items[] = $item;
-                    }
-                } else {
-                    throw new \RuntimeException(
-                        'No course booking item found to match '.$item->getCode(). ' on booking '.$this->getId()
-                    );
-                }
-            }
-            return $items;
-        }
-    }
-
-    /**
      * @return \DateTime
      */
     public function getBookingDate()
@@ -293,30 +236,36 @@ class Booking
     }
 
     /**
-     * @param $fieldName
-     * @return FieldValue|null
+     * @return string
      */
-    public function getNormalisedRegistrationFieldValue($fieldName)
+    public function getPaymentGroupReference()
     {
-        if (!$this->getRegistrationProgress()) {
-            return null;
-        }
+        return $this->paymentGroupReference;
+    }
 
-        $progresses = $this
-            ->getRegistrationProgress()
-            ->getStepProgresses();
+    /**
+     * @param string $paymentGroupReference
+     * @return $this
+     */
+    public function setPaymentGroupReference($paymentGroupReference)
+    {
+        $this->paymentGroupReference = $paymentGroupReference;
+        return $this;
+    }
 
-        /** @var $progress StepProgress */
-        foreach ($progresses as $progress) {
-            try {
-                return $progress->getFieldValueByName($fieldName)->getValue();
-            } catch (NotFoundException $e) {
-                /*
-                 * FIXME: There's nothing to do in this catch block because this whole process is bad - we shouldn't be relying
-                 * on uniqueness of field names across the entire registration. This method should take a step name as well.
-                 */
-            }
-        }
-        return null;
+    /**
+     * @return string
+     */
+    public function getBookingReference()
+    {
+        return $this->bookingReference;
+    }
+
+    /**
+     * @param string $bookingReference
+     */
+    public function setBookingReference($bookingReference)
+    {
+        $this->bookingReference = $bookingReference;
     }
 }
