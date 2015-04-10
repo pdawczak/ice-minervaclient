@@ -749,4 +749,18 @@ class MinervaClient
         );
         return $this->client->getCommand('GetCourseApplication', $values)->execute();
     }
+
+    /**
+     * Get booking cancellation statuses by username-courseId pairs.
+     *
+     * @param $usernameCourseIdPairsString
+     * @return mixed
+     */
+    public function checkBookingsCancelledStatuses($usernameCourseIdPairsString)
+    {
+        $values = [
+            'usernameCourseIdPairs' => $usernameCourseIdPairsString
+        ];
+        return $this->client->getCommand('CheckBookingsCancelledStatuses', $values)->execute();
+    }
 }
