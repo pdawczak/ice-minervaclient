@@ -701,7 +701,13 @@
         "CheckBookingsCancelledStatuses": {
             "httpMethod": "POST",
             "uri": "api/bookings/cancelled-statuses",
-            "summary": "Get array of statuses for bookings of specified pairs of username&courseId"
+            "summary": "Get array of statuses for bookings of specified pairs of username&courseId",
+            "parameters": {
+                "usernameCourseIdPairs" : {
+                    "location":"body",
+                    "required":true
+                }
+            }
         }
     }
 }
